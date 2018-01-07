@@ -122,7 +122,7 @@ app.post("/contact", function (req, res) {
 
 
 let signup = require('./module/adminlogin');
-app.post("/signup", function (req, res) {
+app.post("/adminlogin", function (req, res) {
     console.log("request body is", req.body.email);
     signup.find({email: req.body.email, password: req.body.password}, (err, sdata) => {
        if(sdata.length === 1) {
@@ -133,6 +133,31 @@ app.post("/signup", function (req, res) {
   //  console.log(res);
 
 });
+
+let login = require('./module/userlogin');
+app.post("/UserSignUp", function (req, res) {
+    console.log("request body is", req.body);
+    let data = new login({
+        email: req.body.email,
+        password: req.body.password
+
+    });
+    data.save((req, res) => {
+        console.log('success user login');
+    });
+});
+app.post("/Userlogin", function (req, res) {
+    console.log("request body is", req.body.email);
+    login.find({email: req.body.email, password: req.body.password}, (err, sdata) => {
+        if(sdata.length === 1) {
+            console.log('come to the dashboard');
+            //  res.send('success');
+        }else {console.log('email and password is wrong')}
+    });
+    //  console.log(res);
+
+});
+
 
 app.listen(PORT, function () {
     console.log("App listening on PORT: " + PORT);

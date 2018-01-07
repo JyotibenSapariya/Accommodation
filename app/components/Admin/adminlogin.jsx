@@ -13,12 +13,10 @@ var Adminlogin = React.createClass({
         var message = "";
         console.log(e.target);
         var signup = this;
-        axios.post('/signup', {
+        axios.post('/adminlogin', {
             email: document.querySelector("#email").value,
             password: document.querySelector("#passwordkey").value,
         })
-
-
     },
 
 

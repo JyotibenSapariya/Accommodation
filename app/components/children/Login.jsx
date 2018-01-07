@@ -7,13 +7,13 @@ var Login = React.createClass({
 
 
     submitSignup: function (e) {
-        alert('hello0');
+        alert(document.querySelector("#emailId").value);
         e.preventDefault();
         var form = e.target;
         var message = "";
         console.log(e.target);
-        var signup = this;
-        axios.post('/signup', {
+        var login = this;
+        axios.post('/UserSignUp', {
             email: document.querySelector("#emailId").value,
             password : document.querySelector("#passwordkey").value,
         })
@@ -21,9 +21,23 @@ var Login = React.createClass({
 
     },
 
+    submitLogin: function (e) {
+        alert('user logging');
+        e.preventDefault();
+        var form = e.target;
+        var message = "";
+        console.log(e.target);
+        var signup = this;
+        axios.post('/Userlogin', {
+            email: document.querySelector("#useremail").value,
+            password: document.querySelector("#userpassword").value,
+        })
+    },
+
+
 
     render: function () {
-        const {submitSignup} = this;
+        const {submitSignup,submitLogin} = this;
 
         return (<div>
                 <div className="logmod">
@@ -79,18 +93,18 @@ var Login = React.createClass({
                                             className="logmod__heading-subtitle">Enter your email and password <strong>to sign in</strong></span>
                                     </div>
                                     <div className="logmod__form">
-                                        <form accept-charset="utf-8" action="#" className="simform">
+                                        <form className="simform" onSubmit={submitLogin}>
                                             <div className="sminputs">
                                                 <div className="input full">
                                                     <label className="string optional" for="user-name">Email*</label>
-                                                    <input className="string optional" maxlength="255" id="email" name="email"
+                                                    <input className="string optional" maxlength="255" id="useremail" name="useremail"
                                                            placeholder="Email" type="email" size="50"/>
                                                 </div>
                                             </div>
                                             <div className="sminputs">
                                                 <div className="input full">
                                                     <label className="string optional" for="user-pw">Password *</label>
-                                                    <input className="string optional" maxlength="255" id="user-pw"
+                                                    <input className="string optional" maxlength="255" id="userpassword" name="userpassword"
                                                            placeholder="Password" type="password" size="50"/>
                                                     <span className="hide-password">Show</span>
                                                 </div>

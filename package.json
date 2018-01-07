@@ -1,0 +1,36 @@
+{
+  "name": "jyoti",
+  "version": "1.0.0",
+  "description": "jyoti's first project",
+  "main": "public/index.html",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "webpack & node server",
+    "start": "node server",
+    "build": "webpack"
+  },
+  "author": "TuVeDa",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^0.12.0",
+    "body-parser": "^1.15.2",
+    "express": "^4.14.0",
+    "mongoose": "^4.5.1",
+    "morgan": "^1.7.0",
+    "nodemailer": "^3.1.8",
+    "nodemailer-smtp-transport": "^2.7.4",
+    "qs": "^6.3.0",
+    "react": "^15.4.2",
+    "react-dom": "^15.4.2",
+    "react-router": "^2.4.1",
+    "request": "^2.79.0",
+    "xoauth2": "^1.1.0"
+  },
+  "devDependencies": {
+    "babel-core": "^6.3.13",
+    "babel-loader": "^6.2.0",
+    "babel-preset-es2015": "^6.3.13",
+    "babel-preset-react": "^6.3.13",
+    "webpack": "^1.14.0"
+  }
+}

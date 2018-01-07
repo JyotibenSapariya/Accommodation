@@ -1,0 +1,283 @@
+
+/*  http://www.intimateweddings.com/blog/five-color-palettes-cobalt-blue/  */
+/* Title Font:
+
+http://www.dafont.com/xperia.font?text=tuveda&fpp=100&psize=l
+
+Possible Sub Font
+
+http://www.dafont.com/zekton.font?text=What+We+Do+Here&fpp=100&psize=xs
+
+KEY Color: 0A46F9; ---> http://paletton.com/
+
+*/
+html,body {
+    height:100%;
+    margin:0;
+    padding:0;
+    
+}
+
+h1 {
+	text-align: center;
+}
+
+/* 
+
+SECTION: navbar  
+
+*/
+.navbar {
+	background-color: #02DAF8;
+	/*background: -webkit-linear-gradient(left, #05E0FF, #0A45F9);*/
+	
+}
+
+/* nav buttons*/
+.nav.navbar-nav.navbar-right a{
+	color: white;
+}
+
+.nav.navbar-nav.navbar-right li a{
+	color: white;
+}
+
+.nav.navbar-nav.navbar-right li a:hover{
+	color: #0A45F9;
+	background-color: #7DEEFE;
+}
+
+.nav.navbar-nav.navbar-right li a:active{
+	color: #5D85FD;
+	background-color: #4FE7FC;
+}
+
+#title{
+	color: white;
+}
+
+#title:hover{
+	color: #0A45F9;
+}
+
+#title:active{
+	color: #5D85FD;
+}
+
+/* 
+
+SECTION: multi-page styles
+
+*/
+
+#childContainer{
+	/*position: relative;*/
+	height: 100%;
+	width: 100%;
+	display: flex;
+ 	justify-content: center;
+  	align-items: center; 	
+}
+
+.sectionTitle{
+	font-size: 3em;
+	font-
+	margin-bottom: 1em;
+	color: #02DAF8;
+	text-shadow: 0px 0px 4px #C0C0C0;
+}
+
+/* 
+
+SECTION: landing page
+
+*/
+
+#landingWindow{
+    top: 50px;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    position: absolute;
+    width: auto;
+    height: auto;
+    background: #C0C0C0 url("../img/gears2.jpg") no-repeat fixed center;
+    background-size: 100% 100%; 
+    /*background: #C0C0C0;*/
+}
+
+.titleRow{
+	/*height: 100%;*/
+	position: absolute;
+  	top: 35%;
+  	left: 50%;
+  	transform: translate(-50%, -50%);
+  	text-align: center;
+}	
+
+#landingTitle{
+	font-weight: bold;
+	font-size: 6em;
+	color: #02DAF8;
+	text-shadow: 0px 0px 10px #C0C0C0;
+}
+
+.lowerCase{
+	color: #7DEEFE;
+}
+
+#subTitle{
+	color: #808080;
+	font-size: 26px;
+	font-style: italic;
+}
+
+
+/* 
+
+SECTION: Team page, about us 
+
+*/
+
+#teamRow{
+  	margin: 0 2em 0 2em;
+}
+
+
+#profileRow{
+	margin-top: 4em;
+}
+
+.profileBox{
+	text-align: center;
+}
+
+.profilePic{
+	width: 11em;
+	height: 11em;
+	border-radius: 10em 10em;
+	margin: auto;
+	display: block;
+	box-shadow: 0px 0px 15px grey;
+}
+
+.teammate{
+	margin: 15px 0px 2px 0px;
+	color: #0A45F9;
+	text-shadow: 0px 0px 2px #C0C0C0;
+}
+
+.subheading{
+	margin-bottom: 0px;
+	font-style: italic;
+	color: #02DAF8;
+	text-shadow: 0px 0px 3px #C0C0C0;
+}
+
+.teammateBlurb{
+	color: #808080;
+	margin-bottom: 3em;
+}
+
+/* 
+
+SECTION: Projects, portfolio 
+
+*/
+
+#projectRow{
+	margin: 3em 2em 0 2em;
+	text-align: center;
+}
+
+.projectBox{
+	margin-bottom: 3em;
+}
+
+.projectTitle{
+	color: #0A45F9;
+	text-shadow: 0px 0px 2px #C0C0C0;
+	margin-bottom: 0px;
+}
+
+.projectSubTitle{
+	color: #02DAF8;
+	text-shadow: 0px 0px 3px #C0C0C0;
+	margin-top: 1em;
+}
+
+.projectBlurb{
+	color: #808080;
+	padding: 1em 1em 1em 1em;
+}
+
+.projectInfo{
+	margin-top: 1em;
+}
+
+.screenShot{
+	width: 20em;
+	height: 15em;
+	border-radius: 2em;
+	margin: auto;
+	box-shadow: 0px 0px 15px grey;
+}
+
+.screenShot:hover{
+	filter:blur(5px);
+}
+
+.technologies{
+	list-style-type: none;
+	padding-left: 0;
+	color: #808080;
+}
+
+
+
+/* 
+
+SECTION: contact page
+
+*/
+
+#formRow{
+	margin: 3em 0 0 0;
+}
+
+#formRow label{
+	color: #808080;
+}
+
+#formRow button{
+	background-color: #0A45F9;
+	color: white;
+	box-shadow: 0px 0px 5px grey;
+}
+
+#formRow button:hover{
+	background-color: #02DAF8;
+	color: #808080;
+}
+
+#formRow button:active{
+	background-color: #808080;
+	color: #02DAF8;
+}
+
+.form-control{
+	border-right: none;
+	border-left: none;
+	border-top: none;
+	box-shadow: none;
+	border-radius: 0px;
+}
+
+.form-control:focus{
+	box-shadow: none;
+	border-bottom: 2px solid #02DAF8;
+}
+
+#newsletter{
+	margin-bottom: 2em;
+}

@@ -158,6 +158,18 @@ app.post("/Userlogin", function (req, res) {
 
 });
 
+let AddRoom = require('./module/AddRoom');
+app.post("/AddRoom", function (req, res) {
+    console.log("request body is", req.body.Apartment_name);
+    let data = new AddRoom({
+        Apartment_name: req.body.Apartment_name
+    });
+    data.save((req, res) => {
+        console.log('success add room');
+    });
+});
+
+
 
 app.listen(PORT, function () {
     console.log("App listening on PORT: " + PORT);

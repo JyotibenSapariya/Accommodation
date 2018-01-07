@@ -1,0 +1,11 @@
+var express = require("express");
+var mongoose = require("mongoose");
+var axios = require("axios");
+var app = express();
+let AddRoomSchema =  mongoose.Schema({
+    Apartment_name: String
+});
+let AddRoom =  mongoose.model('AddRoom',AddRoomSchema);
+
+module.exports = AddRoom;
+

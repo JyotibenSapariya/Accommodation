@@ -27,6 +27,9 @@ var Home = require("../components/children/Home.jsx");
 var login = require("../components/children/Login.jsx");
 var Rent = require("../components/children/Rent.jsx");
 
+var Adminlogin = require("../components/Admin/adminlogin.jsx");
+
+
 // Export the Routes
 module.exports = (
 
@@ -36,6 +39,7 @@ module.exports = (
   	{/* navbar */}
     <Route path="/" component={Main}>
 
+
 	    <Route path="Landing" component={Landing} />
 	    <Route path="Contact" component={Contact} />
 	    <Route path="Find" component={Find} />
@@ -43,8 +47,12 @@ module.exports = (
 	    <Route path="Rent" component={Rent} />
         <Route path="login" component={login} />
 
+
   		{/* default route if all else fails */}
     	<IndexRoute component={Landing} />
+
     </Route>
+
+      <Route path="/Adminlogin" component={Adminlogin} />
   </Router>
 );

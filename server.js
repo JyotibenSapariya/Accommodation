@@ -113,6 +113,16 @@ app.post("/AddRoom", function (req, res) {
     console.log("request body is", req.body.Apartment_name);
     let data = new AddRoom({
         Apartment_name: req.body.Apartment_name,
+        Room_Availability_From: req.body.Room_Availability_From,
+        Till: req.body.Till,
+        Room_Cost_in_euros: req.body.Room_Cost_in_euros,
+        Number_of_beds: req.body.Number_of_beds,
+        Bathroom: req.body.Bathroom,
+        Amenities: req.body.Amenities,
+        Contact_Details: req.body.Contact_Details,
+        Phone_Number: req.body.Phone_Number,
+        Address: req.body.Address,
+        Other_details: req.body.Other_details,
         Image_name: req.body.Image_name
     });
     data.save((req, res) => {

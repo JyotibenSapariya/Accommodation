@@ -1,37 +1,39 @@
-var React = require("react");
+import React, { Component } from 'react';
+import axios from 'axios';
+class Home extends Component {
+    constructor(props) {
+        super(props);
+        this.state = { data: [] };
+        this.submitSignup = this.submitSignup.bind(this);
+	}
+	submitSignup() {
+        alert("inside");
 
-var Home = React.createClass({
+        axios.get('/getRooms')
+            .then(res => {
+                this.setState({ data: JSON.stringify(res.data) });
+              //  alert("hi");
+                alert(JSON.stringify(res.data));
 
-	render: function(){
+            })
+			.catch(err => {
+            console.error(err);
+        });
+
+    }
+
+	render(){
 		return (
 			<div id="teamRow">
 				<h1 className="row sectionTitle" >Home</h1>
-				
-				<div className="row" id="profileRow">
-					<div className="col-sm-4 col-lg-6 profileBox" id="leftBox">
-						<img src="img/tDavis1.jpg" className="profilePic" id="turner"/>
-						<h4 className="teammate">Turner</h4>
-						<p className="subheading">Web Developer</p>
-						<p className="teammateBlurb">As TuVeDa’s back end engineer, Turner creates efficient systems and stable functionality with advanced technologies like Ruby on Rails, SQL and Javascript frameworks.</p>
-					</div>
-					
-					<div className="col-sm-4 col-lg-6 profileBox" id="middleBox">
-						<img src="img/veev.jpg" className="profilePic" id="veev"/>
-						<h4 className="teammate">Veev</h4>
-						<p className="subheading">Web Developer</p>
-						<p className="teammateBlurb">As TuVeDa’s web designer and front end developer, Veev creates elegant and engaging UI/UX with cutting edge tools like React, Bootstrap and CSS frameworks.</p>
-					</div>
-					
-					<div className="col-sm-4 col-lg-12 profileBox" id="rightBox">
-						<img src="img/david.jpg" className="profilePic" id="david"/>
-						<h4 className="teammate">David</h4>
-						<p className="subheading">SEO Specialist</p>
-						<p className="teammateBlurb">As TuVeDa’s SEO and marketing specialist, David maximizes your web application’s traffic with customized strategies tailored to your audience and business goals.</p>
-					</div>
-				</div>
+
+			<button onClick={this.submitSignup}>Hello</button>
+
+				<p > {this.state.data }</p>
+
 			</div>
 		)
 	}
-});
+}
 
-module.exports = Home;
+export default Home;

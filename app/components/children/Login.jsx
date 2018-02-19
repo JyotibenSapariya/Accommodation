@@ -1,130 +1,120 @@
 // Include React
-var React = require("react");
+import React from "react";
+import axios from "axios"
 
-var axios = require("axios");
+let Login = React.createClass({
 
-var Login = React.createClass({
+    changeToLoging: function () {
+        document.getElementById("Sign Up").style.display = "none";
+        document.getElementById("Login").style.display = "block";
+    },
+    changeToSignUp: function () {
+        document.getElementById("Login").style.display = "none";
+        document.getElementById("Sign Up").style.display = "block";
+    },
 
 
     submitSignup: function (e) {
-        alert(document.querySelector("#emailId").value);
         e.preventDefault();
-        var form = e.target;
-        var message = "";
-        console.log(e.target);
-        var login = this;
+        let login = this;
+
         axios.post('/UserSignUp', {
             email: document.querySelector("#emailId").value,
-            password : document.querySelector("#passwordkey").value,
+            password: document.querySelector("#passwordkey").value,
+        }).then(res => {
+            if(JSON.stringify(res.data)==='true') {
+                alert("You Are Ready to Go... Please Login Now!!!!!");
+                document.getElementById("Login").style.display = "block";
+                document.getElementById("Sign Up").style.display = "none";
+            }else {
+                alert("Email exist... Please Login with It!!!");
+            }
+
+
+            //this.props.history.push("/Login");
         })
 
 
     },
 
     submitLogin: function (e) {
-        alert('user logging');
+        // alert('user logging');
         e.preventDefault();
-        var form = e.target;
-        var message = "";
+        let form = e.target;
+        let message = "";
         console.log(e.target);
-        var signup = this;
+        let signup = this;
         axios.post('/Userlogin', {
             email: document.querySelector("#useremail").value,
             password: document.querySelector("#userpassword").value,
-        })
+        }).then(res => {
+            if(JSON.stringify(res.data)==='true') {
+                this.props.history.push("/Home");
+            }else {
+                alert("Wrong Details... Please Enter Again!!!");
+            }
+
+         })
+
+
     },
 
 
-
     render: function () {
-        const {submitSignup,submitLogin} = this;
+
+        const {changeToLoging,changeToSignUp,submitSignup, submitLogin} = this;
 
         return (<div>
-                <div className="logmod">
-                    <div className="logmod__wrapper">
-                        <span className="logmod__close">Close</span>
-                        <div className="logmod__container">
-                            <ul className="logmod__tabs">
-                                <li data-tabtar="lgm-2"><a href="#">Login</a></li>
-                                <li data-tabtar="lgm-1"><a href="#">Sign Up</a></li>
-                            </ul>
-                            <div className="logmod__tab-wrapper">
-                                <div className="logmod__tab lgm-1">
-                                    <div className="logmod__heading">
-                                        <span className="logmod__heading-subtitle">Enter your personal details <strong>to create an acount</strong></span>
-                                    </div>
-                                    <div className="logmod__form">
-                                        <form  className="simform" onSubmit={submitSignup}>
+                <div className="Login">
 
-                                            <div className="sminputs">
-                                                <div className="input full">
-                                                    <label className="string optional" for="user-name">Email*</label>
-                                                    <input className="string optional" maxlength="255" id="emailId"
-                                                           name="emailId" placeholder="Email" type="email" size="50"/>
-                                                </div>
+                    <h1>    <a onClick={changeToLoging}>Login </a>|
 
-                                                <div className="input string optional">
-                                                    <label className="string optional" for="user-pw">Password *</label>
-                                                    <input className="string optional" maxlength="255" id="passwordKey"
-                                                           name="passwordKey" placeholder="Password"
-                                                           type="text" size="50"/>
-                                                </div>
-                                                <div className="input string optional">
-                                                    <label className="string optional"
-                                                           for="user-pw-repeat">Repeat password *</label>
-                                                    <input className="string optional" maxlength="255"
-                                                           id="user-pw-repeat"
-                                                           placeholder="Repeat password" type="text" size="50"/>
-                                                </div>
-                                            </div>
-                                            <div className="simform__actions">
-                                                <button className="sumbit" name="signup" type="sumbit">SignUp</button>
-                                                <span className="simform__actions-sidetext">By creating an account you agree to our <a
-                                                    className="special" href="#" target="_blank" role="link">Terms & Privacy</a></span>
-                                            </div>
+                            <a onClick={changeToSignUp}>   Sign Up</a>
 
-                                        </form>
-                                    </div>
+                    </h1>
+                </div>
 
-                                </div>
-                                <div className="logmod__tab lgm-2">
-                                    <div className="logmod__heading">
-                                        <span
-                                            className="logmod__heading-subtitle">Enter your email and password <strong>to sign in</strong></span>
-                                    </div>
-                                    <div className="logmod__form">
-                                        <form className="simform" onSubmit={submitLogin}>
-                                            <div className="sminputs">
-                                                <div className="input full">
-                                                    <label className="string optional" for="user-name">Email*</label>
-                                                    <input className="string optional" maxlength="255" id="useremail" name="useremail"
-                                                           placeholder="Email" type="email" size="50"/>
-                                                </div>
-                                            </div>
-                                            <div className="sminputs">
-                                                <div className="input full">
-                                                    <label className="string optional" for="user-pw">Password *</label>
-                                                    <input className="string optional" maxlength="255" id="userpassword" name="userpassword"
-                                                           placeholder="Password" type="password" size="50"/>
-                                                    <span className="hide-password">Show</span>
-                                                </div>
-                                            </div>
-                                            <div className="simform__actions">
-                                                <button className="sumbit" type="sumbit">Log In</button>
-                                                <span className="simform__actions-sidetext"><a className="special"
-                                                                                               role="link" href="#">Forgot your password?<br/>Click here</a></span>
-                                            </div>
-                                        </form>
-                                    </div>
+                <div className="LoginForm">
+                    <form className="row" onSubmit={submitLogin} id="Login">
+                        <h4>Please Enter Your Login Details...</h4>
 
-                                </div>
-                            </div>
+                        <div className="form-group col-xs-12">
+                            <input type="email" className="form-control" id="useremail" placeholder="Email"  required/>
+                             </div>
+
+                        <div className="form-group col-xs-12">
+                            <input type="password" className="form-control" id="userpassword" placeholder="Password"
+                                   required/>
                         </div>
-                    </div>
+
+                        <div className="form-group col-xs-12">
+                            <button type="submit" className="btn" >Submit</button>
+                        </div>
+                    </form>
+                    <form className="row HideSignUp" onSubmit={submitSignup} id="Sign Up">
+                        <h4>Please Enter Details to Sign Up...</h4>
+
+                        <div className="form-group col-xs-12">
+                            <input type="email" className="form-control" id="emailId" placeholder="Email" required/>
+                        </div>
+
+                        <div className="form-group col-xs-12">
+                            <input type="password" className="form-control" id="passwordkey" placeholder="Password"
+                                   required/>
+                        </div>
+                        <div className="form-group col-xs-12">
+                            <input type="password" className="form-control" id="ConfirmPasswordkey" placeholder="Password"
+                                   required/>
+                        </div>
+                        <div className="form-group col-xs-12">
+                            <button type="submit" className="btn" >Submit</button>
+                        </div>
+                    </form>
                 </div>
             </div>
         )
     }
 });
 
-module.exports = Login;
+
+export default Login;

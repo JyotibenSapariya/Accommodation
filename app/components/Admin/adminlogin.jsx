@@ -1,76 +1,54 @@
 ﻿// Include React
-var React = require("react");
+import React from "react";
+import axios from "axios"
 
-var axios = require("axios");
-
-var Adminlogin = React.createClass({
+let Adminlogin = React.createClass({
 
 
-    submitSignup: function (e) {
-        alert('hello0');
+    submitLogin: function (e) {
+      //  alert('hello0');
         e.preventDefault();
-        var form = e.target;
-        var message = "";
-        console.log(e.target);
-        var signup = this;
         axios.post('/adminlogin', {
             email: document.querySelector("#email").value,
             password: document.querySelector("#passwordkey").value,
+        }).then(res =>{
+            if(JSON.stringify(res.data)==="true"){
+                alert("Login Success");
+                this.props.history.push("/AdminHome");
+            }else if(JSON.stringify(res.data)==="false") {
+                alert("Login Failed")
+            }
         })
     },
 
 
     render: function () {
-        const {submitSignup} = this;
+        const {submitLogin} = this;
 
         return (<div>
-                <div className="logmod">
-                    <div className="logmod__wrapper">
-                        <span className="logmod__close">Close</span>
-                        <div className="logmod__container">
-                            <ul className="logmod__tabs">
-                                <li data-tabtar="lgm-2"><a href="#">Login</a></li>
-                            </ul>
-                            <div className="logmod__tab-wrapper">
-                                <div className="logmod__tab lgm-2">
-                                    <div className="logmod__heading">
-                                        <span
-                                            className="logmod__heading-subtitle">Enter your email and password <strong>to Login</strong></span>
-                                    </div>
-                                    <div className="logmod__form">
-                                        <form accept-charset="utf-8" action="#" className="simform"
-                                              onSubmit={submitSignup}>
-                                            <div className="sminputs">
-                                                <div className="input full">
-                                                    <label className="string optional" for="user-name">Email*</label>
-                                                    <input className="string optional" maxlength="255" id="email"
-                                                           name="email"
-                                                           placeholder="Email" type="email" size="50"/>
-                                                </div>
-                                            </div>
-                                            <div className="sminputs">
-                                                <div className="input full">
-                                                    <label className="string optional" for="user-pw">Password *</label>
-                                                    <input className="string optional" maxlength="255" id="passwordkey"
-                                                           name="passwordkey"
-                                                           placeholder="Password" type="password" size="50"/>
-                                                    <span className="hide-password">Show</span>
-                                                </div>
-                                            </div>
-                                            <div className="simform__actions">
-                                                <button className="sumbit" type="sumbit">Log In</button>
-                                            </div>
-                                        </form>
-                                    </div>
+            <div className="AdminLogin">
+                <form className="row" onSubmit={submitLogin} id="Login">
+                    <h4>Please Enter Your Login Details...</h4>
 
-                                </div>
-                            </div>
-                        </div>
+                    <div className="form-group col-xs-12">
+                        <input type="email" className="form-control" id="email" placeholder="Email"  required/>
                     </div>
-                </div>
+
+                    <div className="form-group col-xs-12">
+                        <input type="password" className="form-control" id="passwordkey" placeholder="Password"
+                               required/>
+                    </div>
+
+                    <div className="form-group col-xs-12">
+                        <button type="submit" className="btn" >Submit</button>
+                    </div>
+                </form>
+            </div>
             </div>
         )
     }
 });
 
-module.exports = Adminlogin;
+
+
+export default Adminlogin;

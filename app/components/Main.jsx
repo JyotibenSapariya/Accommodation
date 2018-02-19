@@ -1,11 +1,13 @@
+
 // Include React
-var React = require("react");
+import React from "react";
+//import axios from "axios"
 
 // Helper for making AJAX requests to our API
-// var helpers = require("./utils/routes");
+// let helpers = require("./utils/routes");
 
 // Creating the Results component
-var Main = React.createClass({
+let Main = React.createClass({
 	// getInitialState: function(){
 	// 	return {
 
@@ -56,4 +58,5 @@ var Main = React.createClass({
 	}
 });
 
-module.exports = Main
+
+export default Main;

@@ -1,6 +1,6 @@
 // Include React
-let React = require("react");
-let axios = require("axios");
+import React from "react";
+import axios from "axios"
 
 let Rent = React.createClass({
  AddRoom: function (e) {
@@ -61,4 +61,5 @@ let Rent = React.createClass({
     }
 });
 
-module.exports = Rent;
+
+export default Rent;

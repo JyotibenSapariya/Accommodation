@@ -81,8 +81,7 @@ SECTION: multi-page styles
 
 .sectionTitle{
 	font-size: 3em;
-	font-
-	margin-bottom: 1em;
+	font-margin-bottom: 1em;
 	color: #02DAF8;
 	text-shadow: 0px 0px 4px #C0C0C0;
 }
@@ -280,4 +279,33 @@ SECTION: contact page
 
 #newsletter{
 	margin-bottom: 2em;
+}
+.HideSignUp{
+	display: none;
+ }
+.Login{
+	position: static;
+	background-color: #1d97bf;
+}
+.Login a{
+	margin-left:10%;
+	color: white;
+}
+.LoginForm input{
+	width: 80%;
+	margin-left: 10%;
+	margin-right: 10%;
+	position: inherit;
+}
+.LoginForm h4{
+	align-content: center;
+	font-size: small;
+	margin-left: 30%;
+
+}
+.LoginForm button{
+	margin-left: 40%;
+}
+.AdminLogin{
+margin: 15%;
 }

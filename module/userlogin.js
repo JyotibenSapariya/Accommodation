@@ -1,7 +1,7 @@
-var express = require("express");
-var mongoose = require("mongoose");
-var axios = require("axios");
-var app = express();
+let express = require("express");
+let mongoose = require("mongoose");
+let axios = require("axios");
+let app = express();
 let loginSchema =  mongoose.Schema({
     email: String,
     password:String

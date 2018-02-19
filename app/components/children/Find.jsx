@@ -1,7 +1,8 @@
 // Include React
-var React = require("react");
+import React from "react";
+//import axios from "axios"
 
-var Find = React.createClass({
+let  Find = React.createClass({
 
 	render: function(){
 		return (
@@ -57,4 +58,6 @@ var Find = React.createClass({
 	}
 });
 
-module.exports = Find;
+
+
+export default Find;

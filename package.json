@@ -9,7 +9,7 @@
     "start": "webpack & node server",
     "build": "webpack"
   },
-  "author": "TuVeDa",
+  "author": "Jyoti",
   "license": "ISC",
   "dependencies": {
     "axios": "^0.12.0",
@@ -19,7 +19,6 @@
     "morgan": "^1.7.0",
     "nodemailer": "^3.1.8",
     "nodemailer-smtp-transport": "^2.7.4",
-    "nodemon": "^1.14.8",
     "qs": "^6.3.0",
     "react": "^15.4.2",
     "react-dom": "^15.4.2",
@@ -32,6 +31,7 @@
     "babel-loader": "^6.2.0",
     "babel-preset-es2015": "^6.3.13",
     "babel-preset-react": "^6.3.13",
+    "css-loader": "^0.28.9",
     "webpack": "^1.14.0"
   }
 }

@@ -1,9 +1,7 @@
-// Include React
-var React = require("react");
-// axios for post to server
-var axios = require("axios");
+import React from "react";
+import axios from "axios"
 
-var Contact = React.createClass({
+let Contact = React.createClass({
 
     getInitialState: function () {
         return {
@@ -15,10 +13,10 @@ var Contact = React.createClass({
 
     submitContact: function (e) {
         e.preventDefault();
-        var form = e.target;
-        var message = "";
+        let form = e.target;
+        let message = "";
         console.log(e.target);
-        var contact = this;
+        let contact = this;
         axios.post('/contact', {
             name: document.querySelector("#name").value,
             subject: document.querySelector("#subject").value,
@@ -61,7 +59,7 @@ var Contact = React.createClass({
     }
 });
 
-var ContactForm = React.createClass({
+let ContactForm = React.createClass({
 
     render: function () {
         return (
@@ -92,7 +90,7 @@ var ContactForm = React.createClass({
     }
 });
 
-var Confirmation = React.createClass({
+let Confirmation = React.createClass({
 
     render: function () {
         return (
@@ -105,4 +103,4 @@ var Confirmation = React.createClass({
 });
 
 
-module.exports = Contact
+export default Contact;

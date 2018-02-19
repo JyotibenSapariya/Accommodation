@@ -2,11 +2,11 @@ let express = require("express");
 let mongoose = require("mongoose");
 let axios = require("axios");
 let app = express();
-let adminloginSchema =  mongoose.Schema({
+let contactSchema =  mongoose.Schema({
     email: String,
     password:String
 });
-let adminlogin =  mongoose.model('adminlogin',adminloginSchema);
+let contact =  mongoose.model('contact',contactSchema);
 
-module.exports = adminlogin;
+module.exports = contact;
 

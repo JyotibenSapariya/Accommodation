@@ -1,7 +1,8 @@
 // Include React
-var React = require("react");
+import React from "react";
+//import axios from "axios"
 
-var Landing = React.createClass({
+let Landing = React.createClass({
 
 	render: function(){
 		return (
@@ -23,4 +24,5 @@ var Landing = React.createClass({
 	}
 });
 
-module.exports = Landing;
+
+export default Landing;

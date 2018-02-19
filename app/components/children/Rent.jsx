@@ -12,6 +12,7 @@ let Rent = React.createClass({
         let AddRoom = this;
         axios.post('/AddRoom', {
             Apartment_name: document.querySelector("#Apartment_name").value,
+            Image_name: document.querySelector("#Image_name").value
 
         })
 
@@ -37,6 +38,13 @@ let Rent = React.createClass({
                                     <div className="controls">
                                         <input type="text" name="Apartment_name" id="Apartment_name"
                                                placeholder="Please add Apartment name " className="span8"/>
+                                    </div>
+                                </div>
+
+                                <div className="control-group">
+                                    <label className="control-label"><b>Images</b></label>
+                                    <div className="controls">
+                                        <input type="file" name="Image_name" id="Image_name" className="span8"/>
                                     </div>
                                 </div>
 

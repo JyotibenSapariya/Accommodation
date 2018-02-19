@@ -63,72 +63,13 @@ app.post("/contact", function (req, res) {
         email: req.body.email,
         subject: req.body.subject,
         description: req.body.description
-
-
     });
     data.save((req, res) => {
-
-        //res.send('success');
-
+        res.send(true);
     });
     console.log(data);
-
-
-    let transporter = nodemailer.createTransport({
-        service: 'gmail',
-        auth: {
-            user: 'jyotisapariya1995@gmail.com',
-            pass: 'sapariya1995'
-        }
-    });
-
-    let html = "<b>"
-    html += "Name: " + req.body.name + "<br>";
-    html += "Company Name: " + req.body.subject + "<br>";
-    html += "Email: " + req.body.email + "<br>";
-    html += "Company Description: " + req.body.description + "<br>";
-    html += "</b>"
-
-    // setup email data with unicode symbols
-    let mailOptions = {
-        from: 'jyotisapariya1995@gmail.com', // sender address
-        to: 'jyotisapariya1995@gmail.com', // list of receivers
-        subject: 'New Contact', // Subject line
-        text: 'use html mofo', // plain text body
-        html: html // html body
-    };
-
-    function mailCallback(status) {
-        res.status(status).send();
-    }
-
-    transporter.sendMail(mailOptions, (error, info) => {
-        if (error) {
-            console.log(error);
-            console.log("we errored!")
-            res.status(500).send('email attempt failed!')
-            mailCallback(500);
-
-        } else {
-            console.log('Message %s sent: %s', info.messageId, info.response);
-            res.status(200).send("OK");
-            mailCallback(200)
-        }
-    });
-
-
 });
 
-
-app.get("/getRooms", function (req, res) {
-    console.log("request body is");
-    contact.find((err, data) => {
-        console.log(data)
-        res.json(data);
-    });
-    //  console.log(res);
-
-});
 
 app.post("/UserSignUp", function (req, res) {
     console.log("request body is", req.body);
@@ -171,13 +112,13 @@ app.post("/Userlogin", function (req, res) {
 app.post("/AddRoom", function (req, res) {
     console.log("request body is", req.body.Apartment_name);
     let data = new AddRoom({
-        Apartment_name: req.body.Apartment_name
+        Apartment_name: req.body.Apartment_name,
+        Image_name: req.body.Image_name
     });
     data.save((req, res) => {
         console.log('success add room');
     });
 });
-
 
 
 //Admin Site
@@ -188,11 +129,29 @@ app.post("/adminlogin", function (req, res) {
     adminlogin.find({email: req.body.email, password: req.body.password}, (err, data) => {
         if (data.length === 1) {
             //console.log(data);
-             res.send(true);
+            res.send(true);
         } else {
             //console.log(data)
-           res.send(false);
+            res.send(false);
         }
+    });
+});
+
+app.get("/getRooms", function (req, res) {
+    console.log("room data");
+    AddRoom.find((err, sdata) => {
+        console.log('data find');
+        res.send(JSON.stringify(sdata));
+    });
+    //  console.log(res);
+
+});
+
+app.post("/DeleteRoom", function (req, res) {
+    console.log("delete data");
+    AddRoom.remove({_id: req.body.RId}, (err, sdata) => {
+        console.log('Delete room' + req.body.RId);
+        res.send("success");
     });
 });
 

@@ -19,8 +19,8 @@ let Login = React.createClass({
         let login = this;
 
         axios.post('/UserSignUp', {
-            email: document.querySelector("#emailId").value,
-            password: document.querySelector("#passwordkey").value,
+            email: this.refs.emailId.value,
+            password: this.refs.passwordkey.value,
         }).then(res => {
             if(JSON.stringify(res.data)==='true') {
                 alert("You Are Ready to Go... Please Login Now!!!!!");
@@ -45,8 +45,8 @@ let Login = React.createClass({
         console.log(e.target);
         let signup = this;
         axios.post('/Userlogin', {
-            email: document.querySelector("#useremail").value,
-            password: document.querySelector("#userpassword").value,
+            email: this.refs.useremail.value,
+            password: this.refs.userpassword.value,
         }).then(res => {
             if(JSON.stringify(res.data)==='true') {
                 this.props.history.push("/Home");
@@ -79,11 +79,11 @@ let Login = React.createClass({
                         <h4>Please Enter Your Login Details...</h4>
 
                         <div className="form-group col-xs-12">
-                            <input type="email" className="form-control" id="useremail" placeholder="Email"  required/>
+                            <input type="email" className="form-control"  ref="useremail" placeholder="Email"  required/>
                              </div>
 
                         <div className="form-group col-xs-12">
-                            <input type="password" className="form-control" id="userpassword" placeholder="Password"
+                            <input type="password" className="form-control" id="userpassword" ref="userpassword" placeholder="Password"
                                    required/>
                         </div>
 
@@ -95,11 +95,11 @@ let Login = React.createClass({
                         <h4>Please Enter Details to Sign Up...</h4>
 
                         <div className="form-group col-xs-12">
-                            <input type="email" className="form-control" id="emailId" placeholder="Email" required/>
+                            <input type="email" className="form-control" id="emailId" ref="emailId" placeholder="Email" required/>
                         </div>
 
                         <div className="form-group col-xs-12">
-                            <input type="password" className="form-control" id="passwordkey" placeholder="Password"
+                            <input type="password" className="form-control" id="passwordkey" ref="passwordkey" placeholder="Password"
                                    required/>
                         </div>
                         <div className="form-group col-xs-12">

@@ -23,7 +23,7 @@ let AdminRooms = React.createClass({
         let _this = this;
         alert('delete');
         axios.post("/DeleteRoom",{
-            RId: document.querySelector("#RId").value,
+            RId: this.refs.RId.value,
         })
     },
 
@@ -41,7 +41,7 @@ let AdminRooms = React.createClass({
                             <table className="table">
                                 <tr>
                                     <form onSubmit={DeleteRoom}>
-                                        <input  type="hidden" value= {room._id} name="RId" id="RId" />
+                                        <input  type="hidden" value= {room._id} name="RId" ref="RId" />
 
                                         <td>
                                             <button type="submit" >Delete</button>

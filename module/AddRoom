@@ -13,9 +13,10 @@ let AddRoomSchema =  mongoose.Schema({
         Contact_Details : String,
         Phone_Number : Number,
         Email_Address : String,
-        Address : String,
+        Street : String,
+        City : String,
         Other_details : String,
-    Image_name: String
+        Image_name: String
 });
 let AddRoom =  mongoose.model('AddRoom',AddRoomSchema);
 

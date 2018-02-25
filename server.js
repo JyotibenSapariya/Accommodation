@@ -1,5 +1,6 @@
 // Include Server Dependencies
 let express = require("express");
+let app = express();
 let bodyParser = require("body-parser");
 let logger = require("morgan");
 let mongoose = require("mongoose");
@@ -8,25 +9,26 @@ let nodemailer = require('nodemailer');
 let xoauth2 = require("xoauth2");
 let axios = require("axios");
 
+const fileUpload = require('express-fileupload');
+
+app.use(fileUpload());
+
+// Create Instance of Express
+
+// Sets an initial port. We'll use this later in our listener
+let PORT = process.env.PORT || 3000;
+
 //Import modules
 let adminlogin = require('./module/adminlogin');
 let contact = require('./module/contact');
 let login = require('./module/userlogin');
 let AddRoom = require('./module/AddRoom');
 
-// Require Article Schema
-// let Article = require("./models/Article");
-
-// Create Instance of Express
-
-let app = express();
-// Sets an initial port. We'll use this later in our listener
-let PORT = process.env.PORT || 3000;
 
 // Run Morgan for Logging
 app.use(logger("dev"));
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({extended: true}));
+app.use(bodyParser.urlencoded({extended: false }));
 app.use(bodyParser.text());
 app.use(bodyParser.json({type: "application/vnd.api+json"}));
 
@@ -110,10 +112,24 @@ app.post("/Userlogin", function (req, res) {
 });
 
 app.post("/AddRoom", function (req, res) {
-    console.log("request body is", req.body.Apartment_name);
+   // console.log("request body is", req.body);
+    console.log(req.files);
+   // console.log(req.body.Image_Name);
+    let imageFile = req.files.Image_Name;
+    console.log(req.files.Image_Name);
+    console.log(imageFile.name);
+    if (!req.files)
+        return res.status(400).send('No files were uploaded.');
+
+    imageFile.mv("./public/img/"+ imageFile.name, function(err) {
+        if (err) {
+            return res.status(500).send(err);
+        }
+    });
+    //console.log(req.files);
     let data = new AddRoom({
         Apartment_name: req.body.Apartment_name,
-        Room_Availability_From: req.body.Room_Availability_From,
+       Room_Availability_From: req.body.Room_Availability_From,
         Till: req.body.Till,
         Room_Cost_in_euros: req.body.Room_Cost_in_euros,
         Number_of_beds: req.body.Number_of_beds,
@@ -121,13 +137,26 @@ app.post("/AddRoom", function (req, res) {
         Amenities: req.body.Amenities,
         Contact_Details: req.body.Contact_Details,
         Phone_Number: req.body.Phone_Number,
-        Address: req.body.Address,
+        Email_Address: req.body.Email_Address,
+        Street: req.body.Street,
+        City: req.body.City,
         Other_details: req.body.Other_details,
-        Image_name: req.body.Image_name
+        Image_name: imageFile.name
     });
-    data.save((req, res) => {
-        console.log('success add room');
+    console.log(data);
+    let promise = data.save();
+    //assert.ok(promise instanceof Promise);
+
+    promise.then(function (doc) {
+        res.json("true");
+        //res.send("success");
     });
+    if(!promise)
+        res.json("false")
+
+
+
+
 });
 
 

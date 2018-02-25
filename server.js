@@ -1,4 +1,5 @@
 // Include Server Dependencies
+
 let express = require("express");
 let bodyParser = require("body-parser");
 let logger = require("morgan");
@@ -7,6 +8,7 @@ let request = require('request');
 let nodemailer = require('nodemailer');
 let xoauth2 = require("xoauth2");
 let axios = require("axios");
+let fs   = require('fs');
 
 //Import modules
 let adminlogin = require('./module/adminlogin');
@@ -35,7 +37,7 @@ app.use(express.static("./public"));
 // -------------------------------------------------
 
 // MongoDB Configuration configuration (Change this URL to your own DB)
-mongoose.connect("mongodb://localhost/accomodation");
+mongoose.connect("mongodb://localhost/accomodation",{useMongoClient : true});
 let db = mongoose.connection;
 
 db.on("error", function (err) {
@@ -65,11 +67,27 @@ app.post("/contact", function (req, res) {
         description: req.body.description
     });
     data.save((req, res) => {
-        res.send(true);
-    });
+        });
+    res.send(true);
     console.log(data);
 });
 
+
+app.get("/Showcontactdata", function (req, res) {
+    console.log("contact data");
+    contact.find((err, sdata) => {
+        console.log('data find');
+        res.send(JSON.stringify(sdata));
+    });
+});
+
+app.post("/Deletecontact", function (req, res) {
+    console.log("delete data");
+    contact.remove({_id: req.body.RId}, (err, sdata) => {
+        console.log('Delete contact' + req.body.RId);
+        res.send("success");
+    });
+});
 
 app.post("/UserSignUp", function (req, res) {
     console.log("request body is", req.body);
@@ -86,12 +104,27 @@ app.post("/UserSignUp", function (req, res) {
             });
             data.save((err, res) => {
                 console.log('success user Sign Up');
-
-            });
+                });
             res.send(true);
         }
     });
 
+});
+
+app.get("/Getuserdata", function (req, res) {
+    console.log("contact data");
+    login.find((err, sdata) => {
+        console.log('data find');
+        res.send(JSON.stringify(sdata));
+    });
+});
+
+app.post("/Deleteuserdata", function (req, res) {
+    console.log("delete data");
+    login.remove({_id: req.body.RId}, (err, sdata) => {
+        console.log('Delete room' + req.body.RId);
+        res.send("success");
+    });
 });
 
 app.post("/Userlogin", function (req, res) {
@@ -123,7 +156,8 @@ app.post("/AddRoom", function (req, res) {
         Phone_Number: req.body.Phone_Number,
         Address: req.body.Address,
         Other_details: req.body.Other_details,
-        Image_name: req.body.Image_name
+        Image_name: req.body.Image_name,
+        Status: "UNVERIFIED"
     });
     data.save((req, res) => {
         console.log('success add room');
@@ -149,7 +183,7 @@ app.post("/adminlogin", function (req, res) {
 
 app.get("/getRooms", function (req, res) {
     console.log("room data");
-    AddRoom.find((err, sdata) => {
+    AddRoom.find({Status:"UNVERIFIED"},(err, sdata) => {
         console.log('data find');
         res.send(JSON.stringify(sdata));
     });
@@ -164,6 +198,22 @@ app.post("/DeleteRoom", function (req, res) {
         res.send("success");
     });
 });
+
+app.post("/Verifyroom", function (req, res) {
+    console.log("verify data");
+    AddRoom.update({ _id: req.body.RId },{ $set: {Status:"VERIFIED"}}, (err, sdata) => {
+        console.log('VERIFY room' + req.body.RId);
+        res.send("success");
+    });
+});
+app.get("/GetVerifiedRoom", function (req, res) {
+    console.log("room data");
+    AddRoom.find({Status:"VERIFIED"},(err, sdata) => {
+        console.log('data find');
+        res.send(JSON.stringify(sdata));
+    });
+});
+
 
 app.listen(PORT, function () {
     console.log("App listening on PORT: " + PORT);

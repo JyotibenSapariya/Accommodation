@@ -1,28 +1,29 @@
 // Include React
 import React from "react";
 //import axios from "axios"
+import "react-image-gallery/styles/css/image-gallery.css";
+import ImageGallery from 'react-image-gallery';
 
 let Landing = React.createClass({
 
-	render: function(){
-		return (
-			<div id="landingWindow">
-				<div className="titleRow">
-					<h1 id="landingTitle"  >
-						<span>T</span>
-						<span className="lowerCase">u</span>
-						<span>V</span>
-						<span className="lowerCase">ē</span>
-						<span>D</span>
-						<span className="lowerCase">a</span>
-					</h1>
-					<p id="subTitle">find a room</p>
-				</div>
-				
-			</div>
-		)
-	}
-});
+    render() {const images = [
+        {
+            original: '/img/a.jpg',
+            thumbnail: '/img/a.jpg',
+        },
+        {
+            original: '/img/b.jpg',
+            thumbnail: '/img/b.jpg'
+        },
+        {
+            original: '/img/c.jpg',
+            thumbnail: '/img/c.jpg'
+        }
+    ]
 
+        return (<div className="pageset1">
+            <ImageGallery items={images} /> </div>      );
+    }
+});
 
 export default Landing;

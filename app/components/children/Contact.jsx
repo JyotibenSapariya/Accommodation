@@ -38,7 +38,7 @@ let Contact = React.createClass({
                 contact.setState({
                     confirmationText: "Please refresh and try again!",
                     confirmationHeader: "Ooops!",
-                    showConfirmation: true
+                    showConfirmation: false
                 });
             })
     },

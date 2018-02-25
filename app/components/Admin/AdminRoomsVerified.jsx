@@ -2,7 +2,7 @@
 import React from "react";
 import axios from "axios"
 
-let AdminRooms = React.createClass({
+let AdminRoomsVerified = React.createClass({
 
     getInitialState: function () {
         return {
@@ -12,7 +12,7 @@ let AdminRooms = React.createClass({
 
     componentDidMount: function () {
         let _this = this;
-        this.serverRequest = axios.get("/getRooms")
+        this.serverRequest = axios.get("/GetVerifiedRoom")
             .then(function (result) {
                 _this.setState({rooms: result.data});
             })
@@ -26,22 +26,16 @@ let AdminRooms = React.createClass({
             RId: document.querySelector("#RId").value,
         })
     },
-    VerifyRoom: function (e) {
-        let _this = this;
-        alert('verify insert');
-        axios.post("/Verifyroom",{
-            RId: document.querySelector("#RId").value,
-        }).then(response => {
-            this.props.history.push("/AdminRooms");
-        })
-    },
+
+
+
     render: function () {
         const {rooms} = this.state;
         const {DeleteRoom,VerifyRoom} = this;
         return (
-            <div className="pageset1" >
+            <div className="pageset1">
                 <div id="teamRow">
-                    <h1 className="row sectionTitle" >Manage Room Details</h1>
+                    <h1 className="row sectionTitle" >Verified Rooms</h1>
                 </div>
                 {rooms.map(function (room) {
                     return (
@@ -57,9 +51,7 @@ let AdminRooms = React.createClass({
                                     </form>
                                    <form onSubmit={VerifyRoom}>
                                        <input  type="hidden" value= {room._id} name="RId" id="RId" />
-                                    <td>
-                                        <button type="submit" >Verify Romms</button>
-                                    </td>
+
                                    </form>
                                     <td>{room.Apartment_name}</td>
                                     <td>{room.Image_name}</td>
@@ -74,4 +66,4 @@ let AdminRooms = React.createClass({
     }
 });
 
-export default AdminRooms;
+export default AdminRoomsVerified;

@@ -31,6 +31,9 @@ import Rent from  "../components/children/Rent.jsx";
 import Adminlogin from  "../components/Admin/adminlogin.jsx";
 import AdminHome from  "../components/Admin/AdminHome.jsx";
 import AdminRooms from  "../components/Admin/AdminRooms.jsx";
+import AdminRoomsVerified from  "../components/Admin/AdminRoomsVerified.jsx";
+import UserDataShow from  "../components/Admin/UserDataShow.jsx";
+import AdminContactShow from  "../components/Admin/AdminContactShow.jsx";
 
 
 // Export the Routes
@@ -61,6 +64,9 @@ module.exports = (
 
 	  <Route path="/AdminHome" component={AdminHome} >
 		  <Route path={"/AdminRooms"} component={AdminRooms} />
+		  <Route path={"/AdminRoomsVerified"} component={AdminRoomsVerified} />
+		  <Route path={"/UserDataShow"} component={UserDataShow} />
+		  <Route path={"/AdminContactShow"} component={AdminContactShow} />
 
 	  </Route>
   </Router>

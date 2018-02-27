@@ -1,0 +1,19 @@
+body{
+    height: 100%;
+    width: 100%;
+    font-size: 14px;
+}
+.accommodation-tab{
+    border: 1px solid #aeaeae;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+}
+.accommodation-tab .panel-heading{
+    background-color: #e0e8ff;
+}
+.accommodation-tab .panel-body{
+    min-height: 150px;
+}
+.accommodation-tab ul{
+    list-style: none;
+}

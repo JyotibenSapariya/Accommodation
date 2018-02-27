@@ -30,11 +30,11 @@ let AdminHome = React.createClass({
                         <div className="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                             <ul className="nav navbar-nav navbar-right">
 
-                                <li><a href="#">Home</a></li>
-                                <li><a href="#/AdminHome/AdminRooms">Verify Room</a></li>
-                                <li><a href="#/AdminRooms">Rent Your Room</a></li>
-                                <li><a href="#">Contact Data</a></li>
-                                <li><a href="#/Login">Users Details </a></li>
+                                <li><a href="#/AdminHome">Home</a></li>
+                                <li><a href="#/AdminRooms">UnVerified Room</a></li>
+                                <li><a href="#/AdminRoomsVerified">Verified Room </a></li>
+                                <li><a href="#/AdminContactShow">Contact Data</a></li>
+                                <li><a href="#/UserDataShow">Users Details </a></li>
 
                             </ul>
                         </div>

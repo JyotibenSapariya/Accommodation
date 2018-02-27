@@ -100,7 +100,6 @@ SECTION: landing page
     position: absolute;
     width: auto;
     height: auto;
-    background: #C0C0C0 url("../img/gears2.jpg") no-repeat fixed center;
     background-size: 100% 100%; 
     /*background: #C0C0C0;*/
 }
@@ -309,6 +308,34 @@ SECTION: contact page
 .AdminLogin{
 margin: 15%;
 }
+
+.pageset{
+	margin-top: 60%;
+}
 .pageset1{
 	margin: auto;
+	margin-top: 5%;
 }
+.Phone select{
+	width: 25px;
+
+}
+.phone input{
+	width: 50px;
+}
+.search_adjust{
+	width: 700px;
+	height: 55px;
+	font-size: 35px;
+	background-color: #ebf8f9;
+	color: #000099;
+	box-shadow: 0 0 5px black;
+
+}
+.search_adjust1{
+	float: left;
+	border: #0d0d0d;
+}
+
+
+

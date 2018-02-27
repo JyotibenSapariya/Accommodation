@@ -1,6 +1,7 @@
 ﻿// Include React
 import React from "react";
 import axios from "axios"
+import "../../../public/css/AdminRoomcss.css"
 
 let AdminRooms = React.createClass({
 
@@ -26,35 +27,20 @@ let AdminRooms = React.createClass({
             RId: this.refs.RId.value,
         })
     },
-
-
-
+    VerifyRoom: function (e) {
+        let _this = this;
+        alert('verify insert');
+        axios.post("/Verifyroom",{
+            RId: document.querySelector("#RId").value,
+        }).then(response => {
+            this.props.history.push("/AdminRooms");
+        })
+    },
     render: function () {
         const {rooms} = this.state;
-        const {DeleteRoom} = this;
+        const {DeleteRoom,VerifyRoom} = this;
         return (
             <div>
-                <h1>Rooms</h1>
-                {rooms.map(function (room) {
-                    return (
-                        <div>
-                            <table className="table">
-                                <tr>
-                                    <form onSubmit={DeleteRoom}>
-                                        <input  type="hidden" value= {room._id} name="RId" ref="RId" />
-
-                                        <td>
-                                            <button type="submit" >Delete</button>
-                                        </td>
-                                    </form>
-                                    <td>{room.Apartment_name}</td>
-                                    <td>{room.Image_name}</td>
-                                </tr>
-                            </table>
-
-                        </div>
-                    );
-                })}
             </div>
         )
     }

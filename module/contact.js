@@ -3,8 +3,10 @@ let mongoose = require("mongoose");
 let axios = require("axios");
 let app = express();
 let contactSchema =  mongoose.Schema({
+    name: String,
+    subject:String,
     email: String,
-    password:String
+   description: String
 });
 let contact =  mongoose.model('contact',contactSchema);
 

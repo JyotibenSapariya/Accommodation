@@ -2,22 +2,24 @@ let express = require("express");
 let mongoose = require("mongoose");
 let axios = require("axios");
 let app = express();
-let AddRoomSchema =  mongoose.Schema({
+let AddRoomSchema = mongoose.Schema({
     Apartment_name: String,
-     Room_Availability_From : Date,
-        Till : Date,
-        Room_Cost_in_euros : Number,
-        Number_of_beds : Number,
-        Bathroom : String,
-        Amenities : String,
-        Contact_Details : String,
-        Phone_Number : Number,
-        Email_Address : String,
-        Address : String,
-        Other_details : String,
-    Image_name: String
+    Room_Availability_From: Date,
+    Till: Date,
+    Room_Cost_in_euros: Number,
+    Number_of_beds: Number,
+    Bathroom: String,
+    Amenities: String,
+    Contact_Details: String,
+    Phone_Number: Number,
+    Email_Address: String,
+    Street: String,
+    City: String,
+    Other_details: String,
+    Image_name: String,
+    Status: String
 });
-let AddRoom =  mongoose.model('AddRoom',AddRoomSchema);
+let AddRoom = mongoose.model('AddRoom', AddRoomSchema);
 
 module.exports = AddRoom;
 

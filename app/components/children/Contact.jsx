@@ -18,10 +18,10 @@ let Contact = React.createClass({
         console.log(e.target);
         let contact = this;
         axios.post('/contact', {
-            name: document.querySelector("#name").value,
-            subject: document.querySelector("#subject").value,
-            email: document.querySelector("#email").value,
-            description: document.querySelector("#description").value,
+            name: this.refs.name.value,
+            subject: this.refs.subject.value,
+            email:this.refs.email.value,
+            description: this.refs.description.value,
         })
             .then(function (response) {
                 console.log(response);
@@ -38,7 +38,7 @@ let Contact = React.createClass({
                 contact.setState({
                     confirmationText: "Please refresh and try again!",
                     confirmationHeader: "Ooops!",
-                    showConfirmation: true
+                    showConfirmation: false
                 });
             })
     },
@@ -68,17 +68,17 @@ let ContactForm = React.createClass({
 
                 <form className="row" id="formRow" onSubmit={this.props.submitContact}>
                     <div className="form-group col-xs-12 col-sm-6">
-                        <input type="text" className="form-control" id="name" placeholder="First & Last Name"/>
+                        <input type="text" className="form-control" ref="name" placeholder="First & Last Name"/>
                     </div>
                     <div className="form-group col-sm-6">
-                        <input type="text" className="form-control" id="subject" placeholder="Subject"/>
+                        <input type="text" className="form-control" ref="subject" placeholder="Subject"/>
                     </div>
                     <div className="form-group col-xs-12">
-                        <input type="email" className="form-control" id="email" placeholder="Email"/>
+                        <input type="email" className="form-control" ref="email" placeholder="Email"/>
                     </div>
                     <div className="form-group col-xs-12">
                         <textarea className="form-control" rows="3" placeholder="Tell Us About Your Queries"
-                                  id="description"></textarea>
+                                  ref="description"> </textarea>
                     </div>
 
                     <div className="form-group col-xs-12">

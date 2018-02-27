@@ -5,25 +5,9 @@ import axios from "axios"
 let AdminHome = React.createClass({
 
 
-    submitLogin: function (e) {
-      //  alert('hello0');
-        e.preventDefault();
-        axios.post('/adminlogin', {
-            email: document.querySelector("#email").value,
-            password: document.querySelector("#passwordkey").value,
-        }).then(res =>{
-            if(JSON.stringify(res.data)==="true"){
-                alert("Login Success");
-                this.props.history.push("/AdminHome");
-            }else if(JSON.stringify(res.data)==="false") {
-                alert("Login Failed")
-            }
-        })
-    },
 
 
     render: function () {
-        const {submitLogin} = this;
 
         return (<div>
                 <nav className="navbar navbar-default">
@@ -46,11 +30,11 @@ let AdminHome = React.createClass({
                         <div className="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                             <ul className="nav navbar-nav navbar-right">
 
-                                <li><a href="#">Home</a></li>
-                                <li><a href="#/AdminHome/AdminRooms">Verify Room</a></li>
-                                <li><a href="#/AdminRooms">Rent Your Room</a></li>
-                                <li><a href="#">Contact Data</a></li>
-                                <li><a href="#/Login">Users Details </a></li>
+                                <li><a href="#/AdminHome">Home</a></li>
+                                <li><a href="#/AdminRooms">UnVerified Room</a></li>
+                                <li><a href="#/AdminRoomsVerified">Verified Room </a></li>
+                                <li><a href="#/AdminContactShow">Contact Data</a></li>
+                                <li><a href="#/UserDataShow">Users Details </a></li>
 
                             </ul>
                         </div>

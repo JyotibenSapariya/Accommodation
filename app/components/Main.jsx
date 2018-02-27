@@ -30,7 +30,8 @@ let Main = React.createClass({
                             <span className="icon-bar"></span>
                         </button>
 
-                        <a id="title" className="navbar-brand" href="#/Landing">accomodation</a>
+                        <a id="title" className="navbar-brand" href="#/Landing">Accomodation</a>
+
                     </div>
 
                     {/*Collect the nav links, forms, and other content for toggling */}

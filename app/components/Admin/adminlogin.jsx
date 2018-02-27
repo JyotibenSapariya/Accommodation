@@ -9,8 +9,8 @@ let Adminlogin = React.createClass({
       //  alert('hello0');
         e.preventDefault();
         axios.post('/adminlogin', {
-            email: document.querySelector("#email").value,
-            password: document.querySelector("#passwordkey").value,
+            email: this.refs.email.value,
+            password: this.refs.passwordkey.value,
         }).then(res =>{
             if(JSON.stringify(res.data)==="true"){
                 alert("Login Success");
@@ -31,11 +31,11 @@ let Adminlogin = React.createClass({
                     <h4>Please Enter Your Login Details...</h4>
 
                     <div className="form-group col-xs-12">
-                        <input type="email" className="form-control" id="email" placeholder="Email"  required/>
+                        <input type="email" className="form-control" ref="email" placeholder="Email"  required/>
                     </div>
 
                     <div className="form-group col-xs-12">
-                        <input type="password" className="form-control" id="passwordkey" placeholder="Password"
+                        <input type="password" className="form-control" ref="passwordkey" placeholder="Password"
                                required/>
                     </div>
 

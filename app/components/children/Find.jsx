@@ -18,7 +18,7 @@ let  Find = React.createClass({
 						
 						<div className="row projectInfo">
 							<div className="col-sm-8 col-lg-7">
-								<a target="_blank" href="https://sproutpatterns.com/"><img src="img/sproutPatterns.png" className="screenShot" id="colorPicker"/></a>
+								<a target="_blank" href="https://sproutpatterns.com/"><img src="#" className="screenShot" id="colorPicker"/></a>
 							</div>
 							<div className="col-sm-4 col-lg-5">
 								<h5 className="projectSubTitle">Technologies Used</h5>
@@ -39,7 +39,7 @@ let  Find = React.createClass({
 						
 						<div className="row projectInfo">
 							<div className="col-sm-8 col-lg-7">
-								<a target="_blank" href="https://contygm.github.io/"><img src="img/veevSite.png" className="screenShot" id="veevSite"/></a>
+								<a target="_blank" href="https://contygm.github.io/"><img src="#" className="screenShot" id="veevSite"/></a>
 							</div>
 							<div className="col-sm-4 col-lg-5">
 								<h5 className="projectSubTitle">Technologies Used</h5>

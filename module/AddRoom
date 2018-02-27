@@ -1,8 +1,10 @@
 let express = require("express");
 let mongoose = require("mongoose");
+const Schema = mongoose.Schema;
 let axios = require("axios");
 let app = express();
 let AddRoomSchema =  mongoose.Schema({
+    _id: Schema.Types.ObjectId,
     Apartment_name: String,
      Room_Availability_From : Date,
         Till : Date,

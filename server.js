@@ -23,6 +23,7 @@ let adminlogin = require('./module/adminlogin');
 let contact = require('./module/contact');
 let login = require('./module/userlogin');
 let AddRoom = require('./module/AddRoom');
+let Image = require('./module/Image');
 
 
 // Run Morgan for Logging
@@ -113,21 +114,23 @@ app.post("/Userlogin", function (req, res) {
 
 app.post("/AddRoom", function (req, res) {
    // console.log("request body is", req.body);
-    console.log(req.files);
+   // console.log(req.files);
    // console.log(req.body.Image_Name);
+    console.log(req.files);
     let imageFile = req.files.Image_Name;
-    console.log(req.files.Image_Name);
-    console.log(imageFile.name);
-    if (!req.files)
-        return res.status(400).send('No files were uploaded.');
+    let mul_newpath = new Array();
+   // console.log(req.files.Image_Name);
+    //console.log(imageFile.name);
 
-    imageFile.mv("./public/img/"+ imageFile.name, function(err) {
+
+   /* imageFile.mv("./public/img/"+ imageFile.name, function(err) {
         if (err) {
             return res.status(500).send(err);
         }
-    });
+    });*/
     //console.log(req.files);
     let data = new AddRoom({
+        _id: new mongoose.Types.ObjectId,
         Apartment_name: req.body.Apartment_name,
        Room_Availability_From: req.body.Room_Availability_From,
         Till: req.body.Till,
@@ -141,11 +144,34 @@ app.post("/AddRoom", function (req, res) {
         Street: req.body.Street,
         City: req.body.City,
         Other_details: req.body.Other_details,
-        Image_name: imageFile.name
+       // Image_name: imageFile.name
     });
     console.log(data);
     let promise = data.save();
     //assert.ok(promise instanceof Promise);
+    for (let i = 0; i < req.files.Image_Name.length; i++) {
+        mul_newpath[i] = './public/img/' + imageFile[i].name;
+        console.log(mul_newpath[i]);
+        imageFile[i].mv(mul_newpath[i], function (err) {
+
+            let image_name = imageFile[i].name;
+            console.log(image_name);
+            let imagedata = new Image({
+                RId: data._id,    // assign the _id from the person
+                ImageName: image_name,
+            });
+            imagedata.save(function (error, res) {
+                if (error) {
+                    console.log("image insert error ");
+                    res.send(error);
+
+                }
+                else {
+                    console.log("Multiple image inserted " + [i]);
+                }
+            });
+        });
+    }
 
     promise.then(function (doc) {
         res.json("true");

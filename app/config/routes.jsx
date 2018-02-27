@@ -54,6 +54,7 @@ module.exports = (
         <Route path="login" component={login} />
 
 
+
   		{/* default route if all else fails */}
     	<IndexRoute component={Landing} />
 

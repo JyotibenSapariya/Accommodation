@@ -1,4 +1,3 @@
-
 // Include React
 import React from "react";
 //import axios from "axios"
@@ -8,15 +7,39 @@ import React from "react";
 
 // Creating the Results component
 let Main = React.createClass({
-	// getInitialState: function(){
-	// 	return {
+    // getInitialState: function(){
+    // 	return {
 
-	// 	};
-	// },_
-	// Here we render the function
+    // 	};
+    // },_
+    // Here we render the function
+    /* componentDidMount: function () {
+         if (!sessionStorage.getItem('UserLogin')) {
+             this.props.history.push("/Login");
+         }
+     },*/
+    componentDidMount: function () {
+        if (localStorage.getItem('UserLogin')) {
+            document.getElementById("LogIn").style.display = "none";
+            document.getElementById("LogOut").style.display = "block";
 
-	render: function() {
-        return <div>
+        }else if(!localStorage.getItem('UserLogin')) {
+            document.getElementById("LogIn").style.display = "block";
+            document.getElementById("LogOut").style.display = "none";
+
+        }
+    },
+    LogOut: function () {
+        document.getElementById("LogIn").style.display = "block";
+        document.getElementById("LogOut").style.display = "none";
+
+        localStorage.removeItem("UserLogin");
+        this.props.history.push('/');
+    },
+    render: function () {
+
+
+            return (<div>
             <nav className="navbar navbar-default">
                 <div className="container-fluid">
                     {/*Brand and toggle get grouped for better mobile display */}
@@ -33,7 +56,6 @@ let Main = React.createClass({
                         <a id="title" className="navbar-brand" href="#/Landing">Accomodation</a>
 
                     </div>
-
                     {/*Collect the nav links, forms, and other content for toggling */}
                     <div className="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                         <ul className="nav navbar-nav navbar-right">
@@ -42,7 +64,10 @@ let Main = React.createClass({
                             <li><a href="#/Find">Find Room</a></li>
                             <li><a href="#/Rent">Rent Your Room</a></li>
                             <li><a href="#/Contact">Contact Us</a></li>
-                            <li><a href="#/Login">Login </a></li>
+
+                                <li id="LogIn"><a href="#/Login">Login </a></li>
+
+                                <li id="LogOut"><a onClick={this.LogOut}>LogOut </a></li>
 
                         </ul>
                     </div>
@@ -55,8 +80,8 @@ let Main = React.createClass({
                 {this.props.children}
 
             </div>
-        </div>;
-	}
+        </div>);
+    }
 });
 
 

@@ -48,7 +48,13 @@ let Login = React.createClass({
             email: this.refs.useremail.value,
             password: this.refs.userpassword.value,
         }).then(res => {
-            if(JSON.stringify(res.data)==='true') {
+            alert(JSON.stringify(res.data[0].email));
+            alert(JSON.stringify(this.refs.useremail.value));
+            if(JSON.stringify(res.data[0].email) === JSON.stringify(this.refs.useremail.value)) {
+                document.getElementById("LogIn").style.display = "none";
+                document.getElementById("LogOut").style.display = "block";
+
+                localStorage.setItem('UserLogin', JSON.stringify(res.data[0].email));
                 this.props.history.push("/Home");
             }else {
                 alert("Wrong Details... Please Enter Again!!!");

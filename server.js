@@ -135,7 +135,7 @@ app.post("/Userlogin", function (req, res) {
     login.find({email: req.body.email, password: req.body.password}, (err, sdata) => {
         if (sdata.length === 1) {
             console.log('come to the dashboard');
-            res.send(true);
+            res.send(sdata);
         } else {
             res.send(false);
             console.log('email and password is wrong')

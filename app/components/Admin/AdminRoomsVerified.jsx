@@ -55,6 +55,7 @@ let AdminRoomsVerified = React.createClass({
                                    </form>
                                     <td>{room.Apartment_name}</td>
                                     <td>{room.Image_name}</td>
+                                    <td>{room.City}</td>
                                 </tr>
                             </table>
 

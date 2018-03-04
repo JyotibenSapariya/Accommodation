@@ -2,6 +2,10 @@
 import React from "react";
 import axios from "axios"
 
+
+import io from 'socket.io-client';
+
+let socket = io();
 let Login = React.createClass({
 
     changeToLoging: function () {
@@ -48,13 +52,14 @@ let Login = React.createClass({
             email: this.refs.useremail.value,
             password: this.refs.userpassword.value,
         }).then(res => {
-            alert(JSON.stringify(res.data[0].email));
-            alert(JSON.stringify(this.refs.useremail.value));
+        //    alert(JSON.stringify(res.data[0].email));
+          //  alert(JSON.stringify(this.refs.useremail.value));
             if(JSON.stringify(res.data[0].email) === JSON.stringify(this.refs.useremail.value)) {
                 document.getElementById("LogIn").style.display = "none";
                 document.getElementById("LogOut").style.display = "block";
 
                 localStorage.setItem('UserLogin', JSON.stringify(res.data[0].email));
+
                 this.props.history.push("/Home");
             }else {
                 alert("Wrong Details... Please Enter Again!!!");

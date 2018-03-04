@@ -2,6 +2,9 @@
 import React from "react";
 import axios from "axios"
 
+import io from 'socket.io-client';
+
+let socket = io();
 let Adminlogin = React.createClass({
 
 
@@ -14,6 +17,9 @@ let Adminlogin = React.createClass({
         }).then(res =>{
             if(JSON.stringify(res.data)==="true"){
                 alert("Login Success");
+
+                localStorage.setItem('AdminLogin', this.refs.email.value);
+
                 this.props.history.push("/AdminHome");
             }else if(JSON.stringify(res.data)==="false") {
                 alert("Login Failed")

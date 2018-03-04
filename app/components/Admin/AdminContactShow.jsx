@@ -18,19 +18,7 @@ let AdminContactShow = React.createClass({
                 _this.setState({contacts: result.data});
             })
     },
-    Deletecontact1: function (e) {
-        let _this = this;
-           // alert(this.refs.cic.value);
-            axios.post("/Deletecontact", {
-                RId: this.refs.cic.value,
-            }).then(
-                swal({
-                         title: "Success",
-                         text: "Data Has Been Deleted",
-                         icon: "success",
-                         dangerMode: true,
-                     }));
-    },
+
     Deletecontact: function (e) {
         let _this = this;
         // alert(this.refs.cic.value);
@@ -46,7 +34,7 @@ let AdminContactShow = React.createClass({
                     axios.post("/Deletecontact", {
                         RId: this.refs.cic.value,
                     }).then(swal("Poof! Your imaginary file has been deleted!", {
-                        icon: "success",
+                        icon: "warning",
                     }));
                     this.props.history.push("/AdminContactShow");
                 } else {
@@ -56,38 +44,49 @@ let AdminContactShow = React.createClass({
 
     },
 
+
+
+
     render: function () {
         const {contacts} = this.state;
         const {Deletecontact} = this;
         return (
             <div className="pageset1">
                 <div id="teamRow">
-                    <h1 className="row sectionTitle" >Verified contacts</h1>
+                    <h1 className="row sectionTitle" >Show Customer Queries.</h1>
                 </div>
+                <div>
+                    <table className="table">
+
+                        <tr>
+                            <th>Delete</th>
+                            <th>Name</th>
+                            <th>Email</th>
+                            <th>Subject</th>
+                            <th>Queries</th>
+                        </tr>
+                        <tbody>
                 {contacts.map(function (contact) {
                     return (
-                        <div>
-                            <table className="table">
-                                <tbody>
-                                <tr>
+                        <tr>
                                     <form onSubmit={Deletecontact}>
                                         <input  type="hidden" value={contact._id}   ref="cic"/>
                                         <td>
                                             <button type="submit" className="btn">Delete</button>
                                         </td>
                                     </form>
-
                                     <td>{contact.name}</td>
                                     <td>{contact.email}</td>
                                     <td>{contact.subject}</td>
-                                    <td>{contact.description}</td>
+                            <td>{contact.description}</td>
                                 </tr>
-                                </tbody>
-                            </table>
 
-                        </div>
                     );
                 })}
+                        </tbody>
+                    </table>
+
+                </div>
             </div>
         )
     }

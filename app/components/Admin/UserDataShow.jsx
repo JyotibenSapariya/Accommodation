@@ -1,7 +1,8 @@
 // Include React
 import React from "react";
 import axios from "axios"
-
+import swal from 'sweetalert'
+import { BootstrapTable, TableHeaderColumn } from 'react-bootstrap-table';
 let UserDataShow = React.createClass({
 
     getInitialState: function () {
@@ -20,10 +21,26 @@ let UserDataShow = React.createClass({
 
     Deleteuserdata: function (e) {
         let _this = this;
-        alert('delete');
-        axios.post("/Deleteuserdata",{
-            RId: document.querySelector("#RId").value,
+      //  alert('delete');
+        swal({
+            title: "Are you sure?",
+            text: "Once deleted, you will not be able to recover this imaginary file!",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
         })
+            .then((willDelete) => {
+                if (willDelete) {
+                    axios.post("/Deleteuserdata", {
+                        RId: this.refs.RId.value,
+                    }).then(swal("Poof! Your imaginary file has been deleted!", {
+                        icon: "warning",
+                    }));
+                    this.props.history.push("/UserDataShow");
+                } else {
+                    swal("Your imaginary file is safe!");
+                }
+            });
     },
 
 
@@ -42,10 +59,10 @@ let UserDataShow = React.createClass({
                             <table className="table">
                                 <tr>
                                     <form onSubmit={Deleteuserdata}>
-                                        <input  type="hidden" value= {userdata._id} name="RId" id="RId" />
+                                        <input  type="hidden" value= {userdata._id} ref="RId" />
 
                                         <td>
-                                            <button type="submit" >Delete</button>
+                                            <button type="submit" style={{color: 'white',backgroundColor: 'red', height: '35px',width: '89px',fontSize: '21px',fontFamily: '-webkit-body'}}>Block</button>
                                         </td>
                                     </form>
                                     <td>{userdata.email}</td>

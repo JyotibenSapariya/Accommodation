@@ -235,23 +235,10 @@ app.get("/", function (req, res) {
     res.sendFile(__dirname + "/public/index.html");
 });
 
-
-app.post("/contact", function (req, res) {
-    console.log("request body is", req.body);
-
-    let data = new contact({
-        name: req.body.name,
-        email: req.body.email,
-        subject: req.body.subject,
-        description: req.body.description
-    });
-    data.save((req, res) => {
-        });
-    res.send(true);
-    console.log(data);
-});
-
-
+//*******************************************************
+//Admin Side
+//*******************************************************
+//Admin Side Show Contact Data
 app.get("/Showcontactdata", function (req, res) {
     console.log("contact data");
     contact.find((err, sdata) => {
@@ -259,7 +246,7 @@ app.get("/Showcontactdata", function (req, res) {
         res.send(JSON.stringify(sdata));
     });
 });
-
+//Admin Side Delete Contact Data
 app.post("/Deletecontact", function (req, res) {
     console.log("delete data");
     contact.remove({_id: req.body.RId}, (err, sdata) => {
@@ -267,7 +254,91 @@ app.post("/Deletecontact", function (req, res) {
         res.send("success");
     });
 });
+//Admin Side Show User Data
+app.get("/Getuserdata", function (req, res) {
+    console.log("contact data");
+    login.find((err, sdata) => {
+        console.log('data find');
+        res.send(JSON.stringify(sdata));
+    });
+});
+//Admin Side Delete User Data
+app.post("/Deleteuserdata", function (req, res) {
+    console.log("delete data");
+    login.remove({_id: req.body.RId}, (err, sdata) => {
+        console.log('Delete room' + req.body.RId);
+        res.send("success");
+    });
+});
+//Admin Side show Unverified Rooms
+app.get("/getRooms", function (req, res) {
+    console.log("room data");
+    AddRoom.find({Status:"UNVERIFIED"},(err, sdata) => {
+        console.log('data find');
+        res.send(sdata);
+    });
+    //  console.log(res);
 
+});
+//Admin Side Verify Unverified Rooms
+app.post("/Verifyroom", function (req, res) {
+    console.log("verify data");
+    AddRoom.update({ _id: req.body.RId },{ $set: {Status:"VERIFIED"}}, (err, sdata) => {
+        console.log('VERIFY room' + req.body.RId);
+        res.send("success");
+    });
+});
+//Admin Side Delete Verified and Unverified Rooms
+app.post("/DeleteRoom", function (req, res) {
+    console.log("delete data");
+    AddRoom.remove({_id: req.body.RId}, (err, sdata) => {
+        console.log('Delete room' + req.body.RId);
+        res.send("success");
+    });
+});
+//Admin Side and User Side(Find page) Show Verified Rooms
+app.get("/GetVerifiedRoom", function (req, res) {
+    console.log("room data");
+    AddRoom.find({Status:"VERIFIED"},(err, sdata) => {
+        console.log('data find');
+        res.send(JSON.stringify(sdata));
+    });
+});
+//Admin Login
+app.post("/adminlogin", function (req, res) {
+    console.log("request body is", req.body.email);
+
+    adminlogin.find({email: req.body.email, password: req.body.password}, (err, data) => {
+        if (data.length === 1) {
+            //console.log(data);
+            res.send(true);
+        } else {
+            //console.log(data)
+            res.send(false);
+        }
+    });
+});
+
+
+//*******************************************************
+//User Side
+//*******************************************************
+//User Login
+app.post("/Userlogin", function (req, res) {
+    console.log("request body is", req.body.email);
+    login.find({email: req.body.email, password: req.body.password}, (err, sdata) => {
+        if (sdata.length === 1) {
+            console.log('come to the dashboard');
+            res.send(sdata);
+        } else {
+            res.send(false);
+            console.log('email and password is wrong')
+        }
+    });
+    //  console.log(res);
+
+});
+//User Signup
 app.post("/UserSignUp", function (req, res) {
     console.log("request body is", req.body);
     login.find({email: req.body.email}, (err, data) => {
@@ -283,64 +354,72 @@ app.post("/UserSignUp", function (req, res) {
             });
             data.save((err, res) => {
                 console.log('success user Sign Up');
-                });
+            });
             res.send(true);
         }
     });
 
 });
+//User Side Add Contact Data
+app.post("/contact", function (req, res) {
+    console.log("request body is", req.body);
 
-app.get("/Getuserdata", function (req, res) {
-    console.log("contact data");
-    login.find((err, sdata) => {
-        console.log('data find');
+    let data = new contact({
+        name: req.body.name,
+        email: req.body.email,
+        subject: req.body.subject,
+        description: req.body.description
+    });
+    data.save((req, res) => {
+    });
+    res.send(true);
+    console.log(data);
+});
+//User Side Show more Details about rooms
+app.post("/getRoomsMoreDetails", function (req, res) {
+    //console.log("room data");
+    AddRoom.find({_id:req.body.RId},(err, sdata) => {
+        console.log(sdata);
         res.send(JSON.stringify(sdata));
-    });
-});
-
-app.post("/Deleteuserdata", function (req, res) {
-    console.log("delete data");
-    login.remove({_id: req.body.RId}, (err, sdata) => {
-        console.log('Delete room' + req.body.RId);
-        res.send("success");
-    });
-});
-
-app.post("/Userlogin", function (req, res) {
-    console.log("request body is", req.body.email);
-    login.find({email: req.body.email, password: req.body.password}, (err, sdata) => {
-        if (sdata.length === 1) {
-            console.log('come to the dashboard');
-            res.send(sdata);
-        } else {
-            res.send(false);
-            console.log('email and password is wrong')
-        }
     });
     //  console.log(res);
 
-});
 
+
+});
+//User side show room data city wise
+app.post("/SearchInput", function (req, res) {
+    console.log("request body is", req.body.SearchInput);
+    AddRoom.find({Status:"VERIFIED",City:req.body.SearchInput},(err, sdata) => {
+        console.log('data find');
+        if(sdata.length===0){
+            res.send(JSON.stringify(false));
+        }else {
+            res.send(JSON.stringify(sdata));
+        }
+    })
+});
+//User Side Add rooms Data
 app.post("/AddRoom", function (req, res) {
-     console.log(req.files);
+    console.log(req.files);
     let Images1 = './img/' + req.files.Image_Name1.name;
     // Images = req.files.Image_Name1.name;
     let imageFile = req.files.Image_Name;
     let mul_newpath = new Array();
-   // console.log(req.files.Image_Name);
+    // console.log(req.files.Image_Name);
     //console.log(imageFile.name);
 
 
-   /* imageFile.mv("./public/img/"+ imageFile.name, function(err) {
-        if (err) {
-            return res.status(500).send(err);
-        }
-    });*/
+    /* imageFile.mv("./public/img/"+ imageFile.name, function(err) {
+         if (err) {
+             return res.status(500).send(err);
+         }
+     });*/
     //console.log(req.files);
     let data = new AddRoom({
         _id: new mongoose.Types.ObjectId,
         Apartment_name: req.body.Apartment_name,
-       Room_Availability_From: req.body.Room_Availability_From,
+        Room_Availability_From: req.body.Room_Availability_From,
         Till: req.body.Till,
         Room_Cost_in_euros: req.body.Room_Cost_in_euros,
         Number_of_beds: req.body.Number_of_beds,
@@ -393,94 +472,6 @@ app.post("/AddRoom", function (req, res) {
 
 
 
-});
-
-
-//Admin Site
-
-
-app.post("/adminlogin", function (req, res) {
-    console.log("request body is", req.body.email);
-
-    adminlogin.find({email: req.body.email, password: req.body.password}, (err, data) => {
-        if (data.length === 1) {
-            //console.log(data);
-            res.send(true);
-        } else {
-            //console.log(data)
-            res.send(false);
-        }
-    });
-});
-
-app.get("/getRooms", function (req, res) {
-    console.log("room data");
-    AddRoom.find({Status:"UNVERIFIED"},(err, sdata) => {
-
-
-        console.log('data find');
-        res.send(sdata);
-
-    });
-    //  console.log(res);
-
-});
-
-app.post("/getRoomsMoreDetails", function (req, res) {
-    //console.log("room data");
-    AddRoom.find({_id:req.body.RId},(err, sdata) => {
-        console.log(sdata);
-        res.send(JSON.stringify(sdata));
-    });
-    //  console.log(res);
-
-
-
-});
-
-app.post("/DeleteRoom", function (req, res) {
-    console.log("delete data");
-    AddRoom.remove({_id: req.body.RId}, (err, sdata) => {
-        console.log('Delete room' + req.body.RId);
-        res.send("success");
-    });
-});
-
-app.post("/Verifyroom", function (req, res) {
-    console.log("verify data");
-    AddRoom.update({ _id: req.body.RId },{ $set: {Status:"VERIFIED"}}, (err, sdata) => {
-        console.log('VERIFY room' + req.body.RId);
-        res.send("success");
-    });
-});
-app.get("/GetVerifiedRoom", function (req, res) {
-    console.log("room data");
-    AddRoom.find({Status:"VERIFIED"},(err, sdata) => {
-        console.log('data find');
-        res.send(JSON.stringify(sdata));
-    });
-});
-
-
-app.post("/SearchInput", function (req, res) {
-    console.log("request body is", req.body.SearchInput);
-    AddRoom.find({Status:"VERIFIED",City:req.body.SearchInput},(err, sdata) => {
-        console.log('data find');
-        if(sdata.length===0){
-            res.send(JSON.stringify(false));
-        }else {
-            res.send(JSON.stringify(sdata));
-        }
-    })
-});
-
-
-app.post("/GetSearchRoom", function (req, res) {
-    console.log("search data");
-    AddRoom.find({Status:"VERIFIED",City: req.body.Search},(err, sdata) => {
-        console.log('data find');
-        res.send(JSON.stringify(sdata));
-    });
 });
 
 

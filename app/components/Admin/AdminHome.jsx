@@ -51,7 +51,7 @@ let AdminHome = React.createClass({
                                 <li><a href="#/AdminRooms">UnVerified Room</a></li>
                                 <li><a href="#/AdminRoomsVerified">Verified Room </a></li>
                                 <li><a href="#/AdminContactShow">Contact Data</a></li>
-                                <li><a href="#/AdminDataShow">Admins Details </a></li>
+                                <li><a href="#/UserDataShow">Admins Details </a></li>
                                 <li><a href="#/AdminChat">Chat </a></li>
                                 <li id="LogIn"><a href="#/Login">Login </a></li>
 
@@ -63,10 +63,11 @@ let AdminHome = React.createClass({
                     </div>
                 </nav>
                 <div className="container-fluid" id="childContainer">
+                    <div className="FindRoomMainDiv">
 
                     {/* This code will dump the correct Child Component */}
                     {this.props.children}
-
+                    </div>
                 </div>
             </div>
         )

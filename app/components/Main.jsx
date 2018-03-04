@@ -64,6 +64,7 @@ let Main = React.createClass({
                             <li><a href="#/Find">Find Room</a></li>
                             <li><a href="#/Rent">Rent Your Room</a></li>
                             <li><a href="#/Contact">Contact Us</a></li>
+                            <li><a href="#/Chat">Chat</a></li>
 
                                 <li id="LogIn"><a href="#/Login">Login </a></li>
 

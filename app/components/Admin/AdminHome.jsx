@@ -3,7 +3,24 @@ import React from "react";
 import axios from "axios"
 
 let AdminHome = React.createClass({
+    componentDidMount: function () {
+        if (localStorage.getItem('AdminLogin')) {
+            document.getElementById("LogIn").style.display = "none";
+            document.getElementById("LogOut").style.display = "block";
 
+        }else if(!localStorage.getItem('AdminLogin')) {
+            document.getElementById("LogIn").style.display = "block";
+            document.getElementById("LogOut").style.display = "none";
+
+        }
+    },
+    LogOut: function () {
+        document.getElementById("LogIn").style.display = "block";
+        document.getElementById("LogOut").style.display = "none";
+
+        localStorage.removeItem("AdminLogin");
+        this.props.history.push('/AdminLogin');
+    },
 
 
 
@@ -34,7 +51,12 @@ let AdminHome = React.createClass({
                                 <li><a href="#/AdminRooms">UnVerified Room</a></li>
                                 <li><a href="#/AdminRoomsVerified">Verified Room </a></li>
                                 <li><a href="#/AdminContactShow">Contact Data</a></li>
-                                <li><a href="#/UserDataShow">Users Details </a></li>
+                                <li><a href="#/AdminDataShow">Admins Details </a></li>
+                                <li><a href="#/AdminChat">Chat </a></li>
+                                <li id="LogIn"><a href="#/Login">Login </a></li>
+
+                                <li id="LogOut"><a onClick={this.LogOut}>LogOut </a></li>
+
 
                             </ul>
                         </div>

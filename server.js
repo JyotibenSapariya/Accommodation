@@ -2,7 +2,6 @@
 
 let express = require("express");
 let app = express();
-let http = require('http').Server(app);
 let bodyParser = require("body-parser");
 let logger = require("morgan");
 let mongoose = require("mongoose");
@@ -11,21 +10,191 @@ let nodemailer = require('nodemailer');
 let xoauth2 = require("xoauth2");
 let axios = require("axios");
 let fs   = require('fs');
-let io = require('socket.io')(http);
+let _  = require('underscore');
 
+let uuid = require('uuid');
+// Sets an initial port. We'll use this later in our listener
+let PORT = process.env.PORT || 3000;
+
+//****************Server listening*****************
+let server = app.listen(PORT, function () {
+    console.log("App listening on PORT: " + PORT);
+});
+
+
+let AddUserSchema = new mongoose.Schema({
+
+    Email:String,
+    roomID:String
+});
+let AddUser = mongoose.model('AddUser',AddUserSchema);
+
+let MessageSchema = new mongoose.Schema({
+    who:String,
+    what:String,
+    when: Date
+});
+let AddMsg = mongoose.model('AddMsg',MessageSchema);
+
+let admins = {};
+let users = {};
+
+
+let io = require('socket.io').listen(server);
+
+io.on('connection' , function (socket) {
+    
+    console.log('user connected');
+    socket.on('AddAdmin', function(data) {
+        this.isAdmin = data.isAdmin;
+        socket.username = data.admin;
+       // console.log(('add admin'));
+        /*_.each(admins, function(adminSocket) {
+            io.emit("admin added", socket.username)
+            io.emit("admin added", adminSocket.username)
+        });*/
+
+        admins[socket.username] = socket;
+
+
+      //  console.log('admins : ' + admins[socket.username]);
+
+      //  console.log(data.admin);
+       // console.log('useres : ' + users[socket.roomID]);
+      //  console.log(users);
+        console.log('No of Users Are Online : ' + Object.keys(users).length);
+        //If some user is already online on chat
+        if (Object.keys(users).length > 0) {
+            _.each(users, function(userSocket) {
+                console.log(userSocket.roomID);
+                AddUser.find({roomID: userSocket.roomID},function (err,data) {
+                    console.log(data);
+                })
+                   /* .then(function(history) {
+                        let len = history.length;
+                        let userSocket = users[history[len - 1]];
+                        history.splice(-1, 1);
+                    */    socket.join(userSocket.roomID);
+                       // console.log(socket.join(userSocket.roomID));
+                        io.emit("New Client", {
+                            roomID: userSocket.roomID,
+                            email:userSocket.Email,
+                            //history: history,
+                            details: userSocket.userDetails,
+                            justJoined: true
+                        })
+                    /*})*/
+            });
+
+        }
+    });
+
+    socket.on('add user', function(data) {
+        console.log('add user Socket: ' + data.Email );
+        socket.isAdmin = false;
+        if (data.isNewUser) {
+            data.Email = data.Email;
+            data.roomID = uuid.v4();
+            let AdduserData = new AddUser(data);
+            AdduserData.save();
+
+            socket.emit("roomID", data.roomID);
+        }
+        socket.roomID = data.roomID;
+        console.log('socket id -' + socket.roomID);
+        //Fetch user details
+        AddUser.find({roomID:socket.roomID}, function(err,details){
+            console.log('details' + details);
+        })
+            .then(function(details) {
+                socket.userDetails = details;
+                console.log(socket.userDetails + 'Find the User DATA')
+            })
+            .catch(function(error) {
+                console.log("Line 95 : ", error)
+            });
+
+       if( socket.join(socket.roomID))
+           console.log('socket.join'+ socket.roomID);
+
+        let newUser = false;
+        if (!users[socket.roomID]) {  // Check if different instance of same user. (ie. Multiple tabs)
+            users[socket.roomID] = socket;
+            newUser = true;
+        }
+        AddUser.find({roomID:socket.roomID}, function(err,details){
+            console.log(details);
+        })
+            .then(function(history) {
+                history.splice(-1, 1);
+                io.emit('chat history', {
+                    history: history,
+                    getMore: false
+                });
+                if (Object.keys(admins).length === 0) {
+                    console.log('Admin Ofline');
+                    //Tell user he will be contacted asap and send admin email
+                    io.emit('admin log message', "Thank you for reaching us." +
+                        " Please leave your message here and we will get back to you shortly.");
+                    /*mail.alertMail();*/
+                } else {
+                    if (newUser) {
+                        console.log(data.roomID);
+                        AddUser.find({roomID:socket.roomID}, function(err,details){
+                            console.log(details);
+                        });
+                        io.emit('log message', "Hello " + socket.userDetails + ", How can I help you?");
+
+                        //Make all available admins join this users room.
+                        _.each(admins, function(adminSocket) {
+                            adminSocket.join(socket.roomID);
+                            adminSocket.emit("New Client", {
+                                roomID: socket.roomID,
+                                history: history,
+                                details: socket.userDetails,
+                                justJoined: false
+                            })
+                        });
+                    }
+                }
+            })
+            .catch(function(error) {
+                console.log("Line 132 : ", error)
+            })
+
+    });
+    socket.on('chat message', function(data) {
+        if (data.roomID === "null")
+            data.roomID = socket.roomID;
+        data.isAdmin = socket.isAdmin;
+
+        let AddMsgData = new AddMsg({
+            who:data.isAdmin,
+            what:data.msg,
+            when:data.timestamp
+        });
+        AddMsgData.save(data);
+        console.log(AddMsgData);
+        socket.broadcast.to(data.roomID).emit('chat message', data);
+    });
+    
+   /* socket.on('chat message', function (msg) {
+        console.log('message' + msg.msg + msg.User);
+        io.emit('RECEIVE_MESSAGE',msg);
+
+    });
+    socket.on( 'AdminSendMsg', function (msg) {
+        console.log('Admin message' + msg.msg + msg.User);
+        socket.emit(msg.User).emit('USER_RECEIVE_MESSAGE', msg);
+        //io.emit('USER_RECEIVE_MESSAGE',msg);
+
+    });*/
+});
 const fileUpload = require('express-fileupload');
 
 app.use(fileUpload());
 
-io.on('connection', function(socket){
-    console.log('a user connected');
-    socket.on('chat message', function(msg) {
-        console.log('message: ' + msg);
-    });
-});
 
-// Sets an initial port. We'll use this later in our listener
-let PORT = process.env.PORT || 3000;
 
 //Import modules
 let adminlogin = require('./module/adminlogin');
@@ -232,6 +401,7 @@ app.post("/AddRoom", function (req, res) {
 
 app.post("/adminlogin", function (req, res) {
     console.log("request body is", req.body.email);
+
     adminlogin.find({email: req.body.email, password: req.body.password}, (err, data) => {
         if (data.length === 1) {
             //console.log(data);
@@ -305,6 +475,13 @@ app.post("/SearchInput", function (req, res) {
 });
 
 
-http.listen(PORT, function () {
-    console.log("App listening on PORT: " + PORT);
+app.post("/GetSearchRoom", function (req, res) {
+    console.log("search data");
+    AddRoom.find({Status:"VERIFIED",City: req.body.Search},(err, sdata) => {
+        console.log('data find');
+        res.send(JSON.stringify(sdata));
+    });
 });
+
+
+

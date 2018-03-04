@@ -27,6 +27,7 @@ import Find from  "../components/children/Find.jsx";
 import Home from  "../components/children/Home.jsx";
 import login from  "../components/children/Login.jsx";
 import Rent from  "../components/children/Rent.jsx";
+import Chat from  "../components/children/Chat.jsx";
 
 import Adminlogin from  "../components/Admin/adminlogin.jsx";
 import AdminHome from  "../components/Admin/AdminHome.jsx";
@@ -34,6 +35,7 @@ import AdminRooms from  "../components/Admin/AdminRooms.jsx";
 import AdminRoomsVerified from  "../components/Admin/AdminRoomsVerified.jsx";
 import UserDataShow from  "../components/Admin/UserDataShow.jsx";
 import AdminContactShow from  "../components/Admin/AdminContactShow.jsx";
+import AdminChat from  "../components/Admin/AdminChat.jsx";
 
 
 // Export the Routes
@@ -52,6 +54,7 @@ module.exports = (
 	    <Route path="Home" component={Home} />
 	    <Route path="Rent" component={Rent} />
         <Route path="login" component={login} />
+        <Route path="Chat" component={Chat} />
 
 
 
@@ -68,6 +71,7 @@ module.exports = (
 		  <Route path={"/AdminRoomsVerified"} component={AdminRoomsVerified} />
 		  <Route path={"/UserDataShow"} component={UserDataShow} />
 		  <Route path={"/AdminContactShow"} component={AdminContactShow} />
+		  <Route path={"/AdminChat"} component={AdminChat} />
 
 	  </Route>
   </Router>

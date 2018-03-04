@@ -40,7 +40,37 @@ let AdminRooms = React.createClass({
         const {rooms} = this.state;
         const {DeleteRoom,VerifyRoom} = this;
         return (
-            <div>
+            <div className="pageset1" >
+                <div id="teamRow">
+                    <h1 className="row sectionTitle" >Manage Room Details</h1>
+                </div>
+                {rooms.map(function (room) {
+                    return (
+                        <div>
+                            <table className="table">
+                                <tr>
+                                    <form onSubmit={DeleteRoom}>
+                                        <input  type="hidden" value= {room._id} name="RId" ref="RId" />
+
+                                        <td>
+                                            <button type="submit" >Delete</button>
+                                        </td>
+                                    </form>
+                                    <form onSubmit={VerifyRoom}>
+                                        <input  type="hidden" value= {room._id} name="RId" id="RId" />
+                                        <td>
+                                            <button type="submit" >Verify Romms</button>
+                                        </td>
+                                    </form>
+                                    <td>{room.Apartment_name}</td>
+                                    <td>{room.City}</td>
+                                    <td> <img src={room.Image_name} /></td>
+                                </tr>
+                            </table>
+
+                        </div>
+                    );
+                })}
             </div>
         )
     }

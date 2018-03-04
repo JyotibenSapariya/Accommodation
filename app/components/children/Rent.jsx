@@ -42,6 +42,7 @@ let Rent = React.createClass({
             data.append('Street', this.refs.Street.value);
             data.append('City', this.refs.City.value);
             data.append('Other_details', this.refs.Other_details.value);
+            data.append('Image_Name1', this.Image_Name.files[0]);
             //data.append('filename', this.Image_name.value);
 
             fetch('/AddRoom', {

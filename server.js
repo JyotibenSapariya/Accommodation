@@ -2,6 +2,7 @@
 
 let express = require("express");
 let app = express();
+let http = require('http').Server(app);
 let bodyParser = require("body-parser");
 let logger = require("morgan");
 let mongoose = require("mongoose");
@@ -10,12 +11,18 @@ let nodemailer = require('nodemailer');
 let xoauth2 = require("xoauth2");
 let axios = require("axios");
 let fs   = require('fs');
+let io = require('socket.io')(http);
 
 const fileUpload = require('express-fileupload');
 
 app.use(fileUpload());
 
-// Create Instance of Express
+io.on('connection', function(socket){
+    console.log('a user connected');
+    socket.on('chat message', function(msg) {
+        console.log('message: ' + msg);
+    });
+});
 
 // Sets an initial port. We'll use this later in our listener
 let PORT = process.env.PORT || 3000;
@@ -146,10 +153,9 @@ app.post("/Userlogin", function (req, res) {
 });
 
 app.post("/AddRoom", function (req, res) {
-   // console.log("request body is", req.body);
-   // console.log(req.files);
-   // console.log(req.body.Image_Name);
-    console.log(req.files);
+     console.log(req.files);
+    let Images1 = './img/' + req.files.Image_Name1.name;
+    // Images = req.files.Image_Name1.name;
     let imageFile = req.files.Image_Name;
     let mul_newpath = new Array();
    // console.log(req.files.Image_Name);
@@ -178,21 +184,22 @@ app.post("/AddRoom", function (req, res) {
         City: req.body.City,
         Other_details: req.body.Other_details,
         Status: "UNVERIFIED",
-        Image_name: imageFile.name
+        Image_name: Images1
     });
     console.log(data);
     let promise = data.save();
     //assert.ok(promise instanceof Promise);
     for (let i = 0; i < req.files.Image_Name.length; i++) {
         mul_newpath[i] = './public/img/' + imageFile[i].name;
-        console.log(mul_newpath[i]);
+        let Iname = './img/' + imageFile[i].name;
+        //console.log(mul_newpath[i]);
         imageFile[i].mv(mul_newpath[i], function (err) {
 
             let image_name = imageFile[i].name;
             console.log(image_name);
             let imagedata = new Image({
                 RId: data._id,    // assign the _id from the person
-                ImageName: image_name,
+                ImageName: Iname,
             });
             imagedata.save(function (error, res) {
                 if (error) {
@@ -239,10 +246,25 @@ app.post("/adminlogin", function (req, res) {
 app.get("/getRooms", function (req, res) {
     console.log("room data");
     AddRoom.find({Status:"UNVERIFIED"},(err, sdata) => {
+
+
         console.log('data find');
+        res.send(sdata);
+
+    });
+    //  console.log(res);
+
+});
+
+app.post("/getRoomsMoreDetails", function (req, res) {
+    //console.log("room data");
+    AddRoom.find({_id:req.body.RId},(err, sdata) => {
+        console.log(sdata);
         res.send(JSON.stringify(sdata));
     });
     //  console.log(res);
+
+
 
 });
 
@@ -270,6 +292,19 @@ app.get("/GetVerifiedRoom", function (req, res) {
 });
 
 
-app.listen(PORT, function () {
+app.post("/SearchInput", function (req, res) {
+    console.log("request body is", req.body.SearchInput);
+    AddRoom.find({Status:"VERIFIED",City:req.body.SearchInput},(err, sdata) => {
+        console.log('data find');
+        if(sdata.length===0){
+            res.send(JSON.stringify(false));
+        }else {
+            res.send(JSON.stringify(sdata));
+        }
+    })
+});
+
+
+http.listen(PORT, function () {
     console.log("App listening on PORT: " + PORT);
 });

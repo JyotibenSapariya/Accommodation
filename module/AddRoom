@@ -18,8 +18,8 @@ let AddRoomSchema =  mongoose.Schema({
     Street: String,
     City: String,
     Other_details: String,
-    Image_name: String,
-    Status: String
+    Status: String,
+    Image_name: String
 });
 let AddRoom = mongoose.model('AddRoom', AddRoomSchema);
 

@@ -1,22 +1,35 @@
-import React, { Component } from 'react';
-import axios from 'axios';
-import styles from '../../../public/css/style.css';
+import React, {Component} from 'react';
+//import axios from 'axios';
+import {Image} from 'react-bootstrap';
+import { Redirect } from 'react-router'
 
-class Home extends Component {
+let Home = React.createClass({
 
-	render(){
-		return (<div>
-			<div id="teamRow">
-				<h1 className="row sectionTitle" >Home</h1>
-			</div>
-				<div  >
-					<input type="text"   className={styles.search_adjust} placeholder="Please Search Here....."/>
-                    <button type="submit">SEARCH</button>
-				</div>
+    render() {
 
-		</div>
-		)
-	}
-}
+        let sectionStyle = {
+            flex: 1,
+            flexDirection: 'row',
+            justifyContent: 'center',
+            alignItems: 'stretch',
+            resizeMode: 'stretch',
+
+        };
+        let search_adjust = {
+            position: 'absolute',
+            top: '65%',
+            left: '25%',
+        };
+
+        const { Search } = this;
+        return ( <div>
+                <Image src="./img/bgimg.jpg" style={sectionStyle} responsive>
+                </Image>
+               <p style={search_adjust}>hello...........</p>
+            </div>
+
+        )
+    }
+});
 
 export default Home;

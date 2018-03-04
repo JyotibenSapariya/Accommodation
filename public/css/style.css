@@ -336,6 +336,37 @@ margin: 15%;
 	float: left;
 	border: #0d0d0d;
 }
+.Map{
+	width:600px;
+	height:450px;
+	border:0;
+}
+.FindRoomMainDiv{
+	margin:auto auto auto auto;
 
+}
+.MoreDetails{
+	width: 60%;
+	height: 100%;
+	opacity: .95;
+	top: 10%;
+	left: 20%;
+	display: none;
+	position: fixed;
+	background-color: ghostwhite;
+	overflow: auto;
+	align-content: center;
+}
+.popupDetails{
 
+	position: absolute;
+	left: 50%;
+	top: 17%;
+	margin-left: -202px;
+	font-family: 'Raleway', sans-serif
+
+}
+.Close{
+	align-items:right;
+}
 

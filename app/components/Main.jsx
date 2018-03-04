@@ -75,9 +75,12 @@ let Main = React.createClass({
             </nav>
 
             <div className="container-fluid" id="childContainer">
+            <div className="FindRoomMainDiv">
+
 
                 {/* This code will dump the correct Child Component */}
                 {this.props.children}
+            </div>
 
             </div>
         </div>);

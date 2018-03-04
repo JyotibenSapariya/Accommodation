@@ -68,17 +68,17 @@ let ContactForm = React.createClass({
 
                 <form className="row" id="formRow" onSubmit={this.props.submitContact}>
                     <div className="form-group col-xs-12 col-sm-6">
-                        <input type="text" className="form-control" ref="name" placeholder="First & Last Name"/>
+                        <input type="text" className="form-control" ref="name" placeholder="First & Last Name" required/>
                     </div>
                     <div className="form-group col-sm-6">
-                        <input type="text" className="form-control" ref="subject" placeholder="Subject"/>
+                        <input type="text" className="form-control" ref="subject" placeholder="Subject" required/>
                     </div>
                     <div className="form-group col-xs-12">
-                        <input type="email" className="form-control" ref="email" placeholder="Email"/>
+                        <input type="email" className="form-control" ref="email" placeholder="Email" required/>
                     </div>
                     <div className="form-group col-xs-12">
-                        <textarea className="form-control" rows="3" placeholder="Tell Us About Your Queries"
-                                  ref="description"> </textarea>
+                        <textarea className="form-control" rows="3"  placeholder="Tell Us About Your Queries"
+                                  ref="description" required> </textarea>
                     </div>
 
                     <div className="form-group col-xs-12">

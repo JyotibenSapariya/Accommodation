@@ -38,7 +38,7 @@ let Rent = React.createClass({
             data.append('Amenities', this.refs.Amenities.value);
             data.append('Contact_Details', this.refs.Contact_Details.value);
             data.append('Phone_Number', this.refs.Phone_Number.value);
-            data.append('Email_Address', this.refs.Email_Address.value);
+            data.append('Email_Address', localStorage.getItem('UserLogin'));
             data.append('Street', this.refs.Street.value);
             data.append('City', this.refs.City.value);
             data.append('Other_details', this.refs.Other_details.value);
@@ -75,6 +75,12 @@ let Rent = React.createClass({
 
     render: function () {
         if (!localStorage.getItem('UserLogin')) {
+            swal({
+                title: "You are not Logged in!!!  ",
+                text: "Please Login to Rent Your Room...",
+                icon: "info",
+                dangerMode: true,
+            });
             this.props.history.push("/Login");
         }
             const {AddRoom} = this;
@@ -540,14 +546,7 @@ let Rent = React.createClass({
                                         </div>
 
                                     </div>
-                                    <div className="control-group">
-                                        <label className="control-label"><b>Email Address</b></label>
-                                        <div className="controls">
-                                            <input type="email" name="Email_Address" id="Email_Address"
-                                                   placeholder="Please add your email id " className="span8"
-                                                   ref="Email_Address" required/>
-                                        </div>
-                                    </div>
+
                                     <div className="control-group">
                                         <label className="control-label"><b>Street</b></label>
                                         <div className="controls">

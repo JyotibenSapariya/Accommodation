@@ -58,7 +58,7 @@ let Login = React.createClass({
                 document.getElementById("LogIn").style.display = "none";
                 document.getElementById("LogOut").style.display = "block";
 
-                localStorage.setItem('UserLogin', JSON.stringify(res.data[0].email));
+                localStorage.setItem('UserLogin',res.data[0].email);
 
                 this.props.history.push("/Home");
             }else {

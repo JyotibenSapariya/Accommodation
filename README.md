@@ -30,7 +30,6 @@ The aim of this project is to find rooms in different cities with different cost
 2. Manage Users<br/>
 3. Live chat with User<br/>
 4. ms<br/>
-5. 
 
 
 

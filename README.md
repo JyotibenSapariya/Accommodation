@@ -1,5 +1,5 @@
 <b>Accommodation </b> <br/> <br/>
-The aim of this project is to find rooms in different cities with different costs  and have complete details about the rooms availability and the contract and If user face any problem,He can have a cht with the Admin and admin when in need he provides the services to them if any required by taking up the queries.
+The aim of this project is to find rooms in different cities with different costs  and have complete details about the rooms availability and the contract and If user face any problem,He can have a chat with the Admin and also admin when in need he provides the services to them if any required by taking up the queries.
 
 <br/><br/><i><b>Prerequistes</b></i> <br/>
   Nodejs/npm <br/>
@@ -30,7 +30,7 @@ The aim of this project is to find rooms in different cities with different cost
 2. Manage Users<br/>
 3. Live chat with User<br/>
 4. ms<br/>
-5. <br/>
+5. 
 
 
 

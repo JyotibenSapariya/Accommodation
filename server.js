@@ -488,6 +488,58 @@ app.post("/AddRoom", function (req, res) {
 
 
 });
+app.post("/FindUserRoom", function (req, res) {
+    console.log("request body is", req.body.Email);
+    AddRoom.find({Email_Address:req.body.Email},(err, sdata) => {
+        console.log('data find'+ sdata);
+        if(sdata.length===0){
+            res.send(JSON.stringify(false));
+        }else {
+            res.send(JSON.stringify(sdata));
+        }
+    })
+});
+app.post("/FindUserRoomById", function (req, res) {
+    console.log("request body is", req.body.RId);
+    AddRoom.find({_id:req.body.RId},(err, sdata) => {
+        console.log('data find');
+        if(sdata.length===0){
+            res.send(JSON.stringify(false));
+        }else {
+            res.send(JSON.stringify(sdata));
+        }
+    })
+});
+app.post("/UpdateRoomData", function (req, res) {
+    console.log("request body is", req.body);
+
+    const doc = {
+        Apartment_name: req.body.Apartment_name,
+        Room_Availability_From: req.body.Room_Availability_From,
+        Till: req.body.Till,
+        Room_Cost_in_euros: req.body.Room_Cost_in_euros,
+        Number_of_beds: req.body.Number_of_beds,
+        Bathroom: req.body.Bathroom,
+        Amenities: req.body.Amenities,
+        Contact_Details: req.body.Contact_Details,
+        Phone_Number: req.body.Phone_Number,
+        Email_Address: req.body.Email_Address,
+        Street: req.body.Street,
+        City: req.body.City,
+        Other_details: req.body.Other_details,
+        Status: "UNVERIFIED",
+    };
+    AddRoom.update({_id: req.body.RId}, doc, function (err, data) {
+
+         console.log('data Update');
+        if(data){
+            res.send(JSON.stringify(true));
+        }else {
+            res.send(JSON.stringify(false));
+        }
+    })
+});
+
 
 
 

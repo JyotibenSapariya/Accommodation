@@ -167,8 +167,8 @@ let Rent = React.createClass({
                                     <div className="control-group Phone">
                                         <label className="control-label"><b>Phone Number</b></label>
                                         <div className="controls">
-                                            <select name="countryCode" id="">
-                                                <option data-countryCode="GB" value="44">UK (+44)</option>
+                                            <select name="countryCode" id="" style={{width : '100px' }}>
+                                                <option data-countryCode="GB" value="44">DE (+49)</option>
                                                 <option data-countryCode="US" value="1">USA (+1)</option>
                                                 <optgroup label="Other countries">
                                                     <option data-countryCode="DZ" value="213">Algeria (+213)
@@ -540,7 +540,7 @@ let Rent = React.createClass({
                                                     </option>
                                                 </optgroup>
                                             </select>
-                                            <input type="tel" name="Phone_Number" id="Phone_Number"
+                                            <input  style={{width : '340px' }} type="tel" name="Phone_Number" id="Phone_Number"
                                                    placeholder="Add the mobile number with country code "
                                                    className="span8" ref="Phone_Number" required/>
                                         </div>

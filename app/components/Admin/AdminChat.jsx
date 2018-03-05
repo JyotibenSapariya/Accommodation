@@ -4,6 +4,7 @@ import React from "react";
 
 import io from 'socket.io-client';
 import axios from "axios";
+import swal from "sweetalert";
 
 let socket = io();
 let $chatPage = $('.chat.page'); // The chat page
@@ -149,6 +150,16 @@ let chat = React.createClass({
 
     },
     render: function () {
+
+        if (!localStorage.getItem('AdminLogin')) {
+            swal({
+                title: "Sorry",
+                text: "Please login first",
+                icon: "info",
+                dangerMode: true,
+            });
+            this.props.history.push("/adminlogin");
+        }
         const {receive, send} = this.state;
         return (
             <div>

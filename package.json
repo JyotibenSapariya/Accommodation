@@ -14,6 +14,7 @@
   "dependencies": {
     "@google/maps": "^0.4.5",
     "axios": "^0.12.0",
+    "bcrypt": "^1.0.3",
     "body-parser": "^1.15.2",
     "express": "^4.14.0",
     "express-fileupload": "^0.4.0",

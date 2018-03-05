@@ -19,7 +19,7 @@ let UserDataShow = React.createClass({
             })
     },
 
-    Deleteuserdata: function (e) {
+    Deleteuserdata: function (RId) {
         let _this = this;
       //  alert('delete');
         swal({
@@ -32,7 +32,7 @@ let UserDataShow = React.createClass({
             .then((willDelete) => {
                 if (willDelete) {
                     axios.post("/Deleteuserdata", {
-                        RId: this.refs.RId.value,
+                        RId: RId,
                     }).then(swal("Poof! Your imaginary file has been deleted!", {
                         icon: "warning",
                     }));
@@ -46,25 +46,34 @@ let UserDataShow = React.createClass({
 
 
     render: function () {
+        if (!localStorage.getItem('AdminLogin')) {
+            swal({
+                title: "Sorry",
+                text: "Please login first",
+                icon: "info",
+                dangerMode: true,
+            });
+            this.props.history.push("/adminlogin");
+        }
         const {userdatas} = this.state;
         const {Deleteuserdata} = this;
         return (
             <div className="pageset1">
                 <div id="teamRow">
-                    <h1 className="row sectionTitle" >Verified userdatas</h1>
+                    <h1 className="row sectionTitle" >Manage UserData</h1>
                 </div>
                 {userdatas.map(function (userdata) {
                     return (
                         <div>
                             <table className="table">
                                 <tr>
-                                    <form onSubmit={Deleteuserdata}>
+
                                         <input  type="hidden" value= {userdata._id} ref="RId" />
 
                                         <td>
-                                            <button type="submit" style={{color: 'white',backgroundColor: 'red', height: '35px',width: '89px',fontSize: '21px',fontFamily: '-webkit-body'}}>Block</button>
+                                            <button type="submit" onClick={Deleteuserdata.bind(this,userdata._id )} style={{color: 'white',backgroundColor: 'red', height: '35px',width: '89px',fontSize: '21px',fontFamily: '-webkit-body'}}>Block</button>
                                         </td>
-                                    </form>
+
                                     <td>{userdata.email}</td>
                                 </tr>
                             </table>

@@ -43,7 +43,7 @@ let AdminRooms = React.createClass({
         //_this.setState({roomsMorDetails:""});
         document.getElementById("MoreDetails").style.display = "none";
     },
-    DeleteRoom: function (e) {
+    DeleteRoom: function (RId) {
         //alert(this.setState(e.target.value));
         let _this = this;
         //alert('delete');
@@ -56,7 +56,7 @@ let AdminRooms = React.createClass({
         }) .then((willDelete) => {
             if (willDelete) {
                 axios.post("/DeleteRoom", {
-                    RId: this.refs.RId.value,
+                    RId: RId,
                 }).then(swal("Poof! Your imaginary file has been deleted!", {
                     icon: "warning",
                 }));
@@ -68,7 +68,7 @@ let AdminRooms = React.createClass({
 
     },
 
-    VerifyRoom: function (e) {
+    VerifyRoom: function (RId) {
         let _this = this;
        // alert('verify insert');
         swal({
@@ -81,7 +81,7 @@ let AdminRooms = React.createClass({
             .then((willDelete) => {
                 if (willDelete) {
                     axios.post("/Verifyroom", {
-                        RId: this.refs.RId.value,
+                        RId: RId,
                     }).then(swal("Rooms has been Verified!", {
                         icon: "success",
                     }));
@@ -95,6 +95,15 @@ let AdminRooms = React.createClass({
 
 
     render: function () {
+        if (!localStorage.getItem('AdminLogin')) {
+            swal({
+                title: "Sorry",
+                text: "Please login first",
+                icon: "info",
+                dangerMode: true,
+            });
+            this.props.history.push("/adminlogin");
+        }
         const {rooms, roomsMorDetails} = this.state;
         const {DeleteRoom,VerifyRoom, RoomMoreDetails, CloseDiv} = this;
         return (
@@ -135,18 +144,18 @@ let AdminRooms = React.createClass({
                                                     <li>Street : {rooms.Street}</li>
                                                     <li>City : {rooms.City}</li>
                                                     <li><div style={{marginTop: '10px'}}>
-                                                        <div style={{float: 'left'}}><form onSubmit={DeleteRoom}>
+                                                        <div style={{float: 'left'}}>
                                                         <input  type="hidden" value= {rooms._id}  ref="RId" />
                                                         <td>
-                                                            <button type="submit" className="btn" >Delete</button>
+                                                            <button type="submit" onClick={DeleteRoom.bind(this,rooms._id )} className="btn" >Delete</button>
                                                         </td>
-                                                        </form></div>
-                                                       <div> <form onSubmit={VerifyRoom}>
+                                                        </div>
+                                                       <div>
                                                             <input  type="hidden" value= {rooms._id}  ref="RId" />
                                                             <td>
-                                                                <button type="submit" className="btn" >Verify Romms</button>
+                                                                <button type="submit" onClick={VerifyRoom.bind(this,rooms._id )} className="btn" >Verify Rooms</button>
                                                             </td>
-                                                       </form></div></div></li>
+                                                       </div></div></li>
                                                 </ul>
                                             </div>
                                         </div>

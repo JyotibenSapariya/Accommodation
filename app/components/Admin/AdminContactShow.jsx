@@ -19,7 +19,7 @@ let AdminContactShow = React.createClass({
             })
     },
 
-    Deletecontact: function (e) {
+    Deletecontact: function (RId) {
         let _this = this;
         // alert(this.refs.cic.value);
         swal({
@@ -32,7 +32,7 @@ let AdminContactShow = React.createClass({
             .then((willDelete) => {
                 if (willDelete) {
                     axios.post("/Deletecontact", {
-                        RId: this.refs.cic.value,
+                        RId: RId,
                     }).then(swal("Poof! Your imaginary file has been deleted!", {
                         icon: "warning",
                     }));
@@ -48,6 +48,15 @@ let AdminContactShow = React.createClass({
 
 
     render: function () {
+        if (!localStorage.getItem('AdminLogin')) {
+            swal({
+                title: "Sorry",
+                text: "Please login first",
+                icon: "info",
+                dangerMode: true,
+            });
+            this.props.history.push("/adminlogin");
+        }
         const {contacts} = this.state;
         const {Deletecontact} = this;
         return (
@@ -69,12 +78,12 @@ let AdminContactShow = React.createClass({
                 {contacts.map(function (contact) {
                     return (
                         <tr>
-                                    <form onSubmit={Deletecontact}>
+
                                         <input  type="hidden" value={contact._id}   ref="cic"/>
                                         <td>
-                                            <button type="submit" className="btn">Delete</button>
+                                            <button type="submit" onClick={Deletecontact.bind(this,contact._id )} className="btn">Delete</button>
                                         </td>
-                                    </form>
+
                                     <td>{contact.name}</td>
                                     <td>{contact.email}</td>
                                     <td>{contact.subject}</td>

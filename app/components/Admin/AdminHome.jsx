@@ -1,6 +1,7 @@
 ﻿// Include React
 import React from "react";
 import axios from "axios"
+import swal from "sweetalert";
 
 let AdminHome = React.createClass({
     componentDidMount: function () {
@@ -25,6 +26,15 @@ let AdminHome = React.createClass({
 
 
     render: function () {
+        if (!localStorage.getItem('AdminLogin')) {
+            swal({
+                title: "Sorry",
+                text: "Please login first",
+                icon: "info",
+                dangerMode: true,
+            });
+            this.props.history.push("/adminlogin");
+        }
 
         return (<div>
                 <nav className="navbar navbar-default">

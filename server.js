@@ -1,5 +1,7 @@
 // Include Server Dependencies
 
+//import swal from "sweetalert";
+let swal = require("sweetalert");
 let express = require("express");
 let app = express();
 let bodyParser = require("body-parser");
@@ -11,6 +13,9 @@ let xoauth2 = require("xoauth2");
 let axios = require("axios");
 let fs   = require('fs');
 let _  = require('underscore');
+
+let bcrypt = require('bcrypt');
+let SALT_WORK_FACTOR = 10;
 
 let uuid = require('uuid');
 // Sets an initial port. We'll use this later in our listener
@@ -323,21 +328,6 @@ app.post("/adminlogin", function (req, res) {
 //*******************************************************
 //User Side
 //*******************************************************
-//User Login
-app.post("/Userlogin", function (req, res) {
-    console.log("request body is", req.body.email);
-    login.find({email: req.body.email, password: req.body.password}, (err, sdata) => {
-        if (sdata.length === 1) {
-            console.log('come to the dashboard');
-            res.send(sdata);
-        } else {
-            res.send(false);
-            console.log('email and password is wrong')
-        }
-    });
-    //  console.log(res);
-
-});
 //User Signup
 app.post("/UserSignUp", function (req, res) {
     console.log("request body is", req.body);
@@ -360,6 +350,23 @@ app.post("/UserSignUp", function (req, res) {
     });
 
 });
+
+//User Login
+app.post("/Userlogin", function (req, res) {
+
+    login.find({email: req.body.email, password:req.body.password }, (err, sdata) => {
+        if (sdata.length === 1) {
+            res.send(sdata);
+        } else {
+            console.log('email and password is wrong')
+
+            res.send(false);
+            }
+    });
+    //  console.log(res);
+
+});
+
 //User Side Add Contact Data
 app.post("/contact", function (req, res) {
     console.log("request body is", req.body);
@@ -395,6 +402,7 @@ app.post("/SearchInput", function (req, res) {
         if(sdata.length===0){
             res.send(JSON.stringify(false));
         }else {
+
             res.send(JSON.stringify(sdata));
         }
     })

@@ -1,9 +1,10 @@
 // Include React
 import React from "react";
 import axios from "axios"
-
+import swal from 'sweetalert'
 
 import io from 'socket.io-client';
+
 
 let socket = io();
 let Login = React.createClass({
@@ -27,11 +28,21 @@ let Login = React.createClass({
             password: this.refs.passwordkey.value,
         }).then(res => {
             if(JSON.stringify(res.data)==='true') {
-                alert("You Are Ready to Go... Please Login Now!!!!!");
+                swal({
+                    title: "Success",
+                    text: "You Are Ready to Go... Please Login Now!!!!!",
+                    icon: "info",
+                    dangerMode: true,
+                });
                 document.getElementById("Login").style.display = "block";
                 document.getElementById("Sign Up").style.display = "none";
             }else {
-                alert("Email exist... Please Login with It!!!");
+                swal({
+                    title: "Sorry",
+                    text: "Email exist... Please Login with It!!!",
+                    icon: "error",
+                    dangerMode: true,
+                });
             }
 
 
@@ -55,6 +66,12 @@ let Login = React.createClass({
         //    alert(JSON.stringify(res.data[0].email));
           //  alert(JSON.stringify(this.refs.useremail.value));
             if(JSON.stringify(res.data[0].email) === JSON.stringify(this.refs.useremail.value)) {
+                swal({
+                    title: "Success",
+                    text: "You are successfully log in",
+                    icon: "info",
+                    dangerMode: true,
+                });
                 document.getElementById("LogIn").style.display = "none";
                 document.getElementById("LogOut").style.display = "block";
 
@@ -62,13 +79,14 @@ let Login = React.createClass({
 
                 this.props.history.push("/Home");
             }else {
-                alert("Wrong Details... Please Enter Again!!!");
-            }
-
-         })
-
-
-    },
+                alert('sorry');
+                swal({
+                    title: "Sorry",
+                    text: "Wrong Details... Please Enter Again!!!",
+                    icon: "error",
+                    dangerMode: true,
+                });}
+ })},
 
 
     render: function () {

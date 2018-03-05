@@ -42,7 +42,7 @@ let AdminRoomsVerified = React.createClass({
         //_this.setState({roomsMorDetails:""});
         document.getElementById("MoreDetails").style.display = "none";
     },
-    DeleteRoom: function (e) {
+    DeleteRoom: function (RId) {
         //alert(this.setState(e.target.value));
         let _this = this;
         //alert('delete');
@@ -55,7 +55,7 @@ let AdminRoomsVerified = React.createClass({
         }).then((willDelete) => {
             if (willDelete) {
                 axios.post("/DeleteRoom", {
-                    RId: this.refs.RId.value,
+                    RId: RId,
                 }).then(swal("Poof! Your imaginary file has been deleted!", {
                     icon: "warning",
                 }));
@@ -68,6 +68,15 @@ let AdminRoomsVerified = React.createClass({
     },
 
     render: function () {
+        if (!localStorage.getItem('AdminLogin')) {
+            swal({
+                title: "Sorry",
+                text: "Please login first",
+                icon: "info",
+                dangerMode: true,
+            });
+            this.props.history.push("/adminlogin");
+        }
         const {rooms, roomsMorDetails} = this.state;
         const {DeleteRoom, RoomMoreDetails, CloseDiv} = this;
         return (
@@ -110,12 +119,12 @@ let AdminRoomsVerified = React.createClass({
                                                     <li>City : {rooms.City}</li>
                                                     <li>
                                                         <div style={{marginTop: '10px'}}>
-                                                            <form onSubmit={DeleteRoom}>
+
                                                                 <input type="hidden" value={rooms._id} ref="RId"/>
                                                                 <td>
-                                                                    <button type="submit" className="btn">Delete</button>
+                                                                    <button type="submit" onClick={DeleteRoom.bind(this,rooms._id )} className="btn">Delete</button>
                                                                 </td>
-                                                            </form>
+
                                                         </div>
                                                     </li>
                                                 </ul>

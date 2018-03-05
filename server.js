@@ -30,7 +30,9 @@ let server = app.listen(PORT, function () {
 let AddUserSchema = new mongoose.Schema({
 
     Email:String,
-    roomID:String
+    roomID:String,
+    UserName:String,
+    PhoneNumber:Number
 });
 let AddUser = mongoose.model('AddUser',AddUserSchema);
 
@@ -72,9 +74,12 @@ io.on('connection' , function (socket) {
         if (Object.keys(users).length > 0) {
             _.each(users, function(userSocket) {
                 console.log(userSocket.roomID);
+                console.log(userSocket.Email);
                 AddUser.find({roomID: userSocket.roomID},function (err,data) {
                     console.log(data);
-                })
+                    console.log(data[0].Email);
+                    console.log(data[0].roomID);
+
                    /* .then(function(history) {
                         let len = history.length;
                         let userSocket = users[history[len - 1]];
@@ -83,12 +88,16 @@ io.on('connection' , function (socket) {
                        // console.log(socket.join(userSocket.roomID));
                         io.emit("New Client", {
                             roomID: userSocket.roomID,
-                            email:userSocket.Email,
-                            //history: history,
+                          //  email:userSocket.Email,
+                            email: data[0].Email,
+                            UserName: data[0].UserName,
+                            PhoneNumber: data[0].PhoneNumber,
+
                             details: userSocket.userDetails,
                             justJoined: true
                         })
                     /*})*/
+                })
             });
 
         }
@@ -99,7 +108,11 @@ io.on('connection' , function (socket) {
         socket.isAdmin = false;
         if (data.isNewUser) {
             data.Email = data.Email;
+            data.UserName = data.UserName;
+            data.PhoneNumber = data.PhoneNumber;
             data.roomID = uuid.v4();
+
+
             let AdduserData = new AddUser(data);
             AdduserData.save();
 
@@ -138,7 +151,7 @@ io.on('connection' , function (socket) {
                 });
                 if (Object.keys(admins).length === 0) {
                     console.log('Admin Ofline');
-                    //Tell user he will be contacted asap and send admin email
+                    //Tell user he will be contacted asap
                     io.emit('admin log message', "Thank you for reaching us." +
                         " Please leave your message here and we will get back to you shortly.");
                     /*mail.alertMail();*/
@@ -148,14 +161,16 @@ io.on('connection' , function (socket) {
                         AddUser.find({roomID:socket.roomID}, function(err,details){
                             console.log(details);
                         });
-                        io.emit('log message', "Hello " + socket.userDetails + ", How can I help you?");
+                        io.emit('log message', "Hello " + data.UserName + ", How can I help you?");
 
                         //Make all available admins join this users room.
                         _.each(admins, function(adminSocket) {
                             adminSocket.join(socket.roomID);
                             adminSocket.emit("New Client", {
                                 roomID: socket.roomID,
-                                history: history,
+                                email: data.Email,
+                                UserName: data.UserName,
+                                PhoneNumber: data.PhoneNumber,
                                 details: socket.userDetails,
                                 justJoined: false
                             })
@@ -481,6 +496,58 @@ app.post("/AddRoom", function (req, res) {
 
 
 });
+app.post("/FindUserRoom", function (req, res) {
+    console.log("request body is", req.body.Email);
+    AddRoom.find({Email_Address:req.body.Email},(err, sdata) => {
+        console.log('data find'+ sdata);
+        if(sdata.length===0){
+            res.send(JSON.stringify(false));
+        }else {
+            res.send(JSON.stringify(sdata));
+        }
+    })
+});
+app.post("/FindUserRoomById", function (req, res) {
+    console.log("request body is", req.body.RId);
+    AddRoom.find({_id:req.body.RId},(err, sdata) => {
+        console.log('data find');
+        if(sdata.length===0){
+            res.send(JSON.stringify(false));
+        }else {
+            res.send(JSON.stringify(sdata));
+        }
+    })
+});
+app.post("/UpdateRoomData", function (req, res) {
+    console.log("request body is", req.body);
+
+    const doc = {
+        Apartment_name: req.body.Apartment_name,
+        Room_Availability_From: req.body.Room_Availability_From,
+        Till: req.body.Till,
+        Room_Cost_in_euros: req.body.Room_Cost_in_euros,
+        Number_of_beds: req.body.Number_of_beds,
+        Bathroom: req.body.Bathroom,
+        Amenities: req.body.Amenities,
+        Contact_Details: req.body.Contact_Details,
+        Phone_Number: req.body.Phone_Number,
+        Email_Address: req.body.Email_Address,
+        Street: req.body.Street,
+        City: req.body.City,
+        Other_details: req.body.Other_details,
+        Status: "UNVERIFIED",
+    };
+    AddRoom.update({_id: req.body.RId}, doc, function (err, data) {
+
+         console.log('data Update');
+        if(data){
+            res.send(JSON.stringify(true));
+        }else {
+            res.send(JSON.stringify(false));
+        }
+    })
+});
+
 
 
 

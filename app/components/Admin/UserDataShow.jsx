@@ -2,7 +2,6 @@
 import React from "react";
 import axios from "axios"
 import swal from 'sweetalert'
-import { BootstrapTable, TableHeaderColumn } from 'react-bootstrap-table';
 let UserDataShow = React.createClass({
 
     getInitialState: function () {
